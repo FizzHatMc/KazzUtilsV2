@@ -1,0 +1,13 @@
+{
+  "package": "kazzutilsv2.mixin",
+  "refmap": "mixins.kazzutilsv2.refmap.json",
+  "minVersion": "0.7",
+  "compatibilityLevel": "JAVA_8",
+  "mixins": [
+  ],
+  "client": [
+    "MixinEntity",
+    "MixinEntityLivingBase",
+    "MixinItemRenderer"
+  ]
+}
