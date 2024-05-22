@@ -3,8 +3,12 @@ package com.kazzutilsv2.commands
 import com.kazzutilsv2.KazzUtilsV2
 import com.kazzutilsv2.KazzUtilsV2.Companion.mc
 import com.kazzutilsv2.commands.SimpleCommand.ProcessCommandRunnable
+import com.kazzutilsv2.features.keyshortcut.KeyShortcuts
+import com.kazzutilsv2.gui.KeyShortcutsGui
+import com.kazzutilsv2.gui.editing.ElementaEditingGui
 
 import com.kazzutilsv2.utils.ChatUtils
+import gg.essential.elementa.ElementaVersion
 import net.minecraft.command.ICommandSender
 import net.minecraft.util.BlockPos
 import net.minecraftforge.client.ClientCommandHandler
@@ -18,6 +22,22 @@ class CommandManager {
         //}
         registerCommand("kazzutils") {
             KazzUtilsV2.configManager.openConfigGui()
+        }
+        registerCommand("kazz"){ args ->
+            val arg = args.firstOrNull()
+            if (arg != null) {
+                if(arg.contains("gui",false)){
+                    KazzUtilsV2.displayScreen = ElementaEditingGui()
+                    return@registerCommand
+                }else if(arg.contains("hotkeys",false)){
+                    KazzUtilsV2.displayScreen = KeyShortcutsGui()
+                    return@registerCommand
+                }else{
+                    ChatUtils.messageToChat("Error: Invalid usage: /kazz <gui|hotkeys>")
+                }
+
+
+            }
         }
         /*
         registerCommand("formatmessage") { args ->

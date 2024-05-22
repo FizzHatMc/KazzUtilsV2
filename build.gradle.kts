@@ -7,6 +7,7 @@ plugins {
     id("dev.architectury.architectury-pack200") version "0.1.3"
     id("com.github.johnrengelman.shadow") version "8.1.1"
     kotlin("jvm") version "1.9.0"
+    kotlin("plugin.serialization") version "1.9.22"
 }
 
 //Constants:
@@ -41,6 +42,8 @@ repositories {
 
     maven("https://repo.nea.moe/releases")
     maven("https://maven.notenoughupdates.org/releases")
+    maven("https://repo.essential.gg/repository/maven-public")
+    maven("https://repo.essential.gg/repository/maven-public")
 }
 
 val shadowImpl: Configuration by configurations.creating {
@@ -62,6 +65,9 @@ dependencies {
     forge("net.minecraftforge:forge:1.8.9-11.15.1.2318-1.8.9")
 
     implementation(kotlin("stdlib-jdk8"))
+    implementation("gg.essential:elementa-$mcVersion-forge:647")
+    implementation("gg.essential:vigilance-$mcVersion-forge:297")
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.3")
     shadowImpl("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.3") {
         exclude(group = "org.jetbrains.kotlin")
     }
