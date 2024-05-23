@@ -64,7 +64,7 @@
  * or visit www.oracle.com if you need additional information or have any
  * questions.
  */
-package com.kazzutilsv2.utils.graphics.colors
+package com.kazzutilsv2.utils.colors
 
 import java.awt.Color
 import java.util.*

@@ -19,7 +19,7 @@
 package com.kazzutilsv2.core.structure
 
 import com.kazzutilsv2.utils.RenderUtil
-import com.kazzutilsv2.utils.graphics.colors.CommonColors
+import com.kazzutilsv2.utils.colors.CommonColors
 import gg.essential.universal.UResolution
 import net.minecraft.client.Minecraft
 import net.minecraft.client.gui.GuiButton

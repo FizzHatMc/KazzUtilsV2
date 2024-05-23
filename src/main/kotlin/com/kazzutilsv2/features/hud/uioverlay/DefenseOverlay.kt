@@ -8,7 +8,7 @@ import com.kazzutilsv2.utils.TabUtils
 import com.kazzutilsv2.utils.Utils
 import com.kazzutilsv2.utils.graphics.ScreenRenderer
 import com.kazzutilsv2.utils.graphics.SmartFontRenderer
-import com.kazzutilsv2.utils.graphics.colors.CommonColors
+import com.kazzutilsv2.utils.colors.CommonColors
 import java.awt.Color
 
 object DefenseOverlay {
@@ -19,35 +19,23 @@ object DefenseOverlay {
 
     class DefenseOverlayElement : GuiElement("Defense Overlay Display", x = 10, y = 10) {
         val config = KazzUtilsV2.config.misc.hud
-        var message = ""
+        var message : String? = ""
 
         override fun render() {
-            ChatUtils.messageToChat("In Skyblock : ${Utils.inSkyblock}")
-            message = ChatUtils.defense ?: return
+            if(ChatUtils.defense != "" && ChatUtils.defense != null) message = ChatUtils.defense
             if (toggled) {
-                mc.fontRendererObj.drawStringWithShadow(
-                    message,
-                    x,
-                    y,
-                    Color.GREEN.darker().rgb
-                )
-
+                mc.fontRendererObj.drawStringWithShadow(message, x, y, Color.GREEN.darker().rgb)
             }
         }
 
         override fun demoRender() {
-            mc.fontRendererObj.drawStringWithShadow(
-                "Test",
-                x,
-                y,
-                Color.GREEN.darker().rgb
-            )
+            mc.fontRendererObj.drawStringWithShadow("Defense", x, y, Color.GREEN.darker().rgb)
         }
 
         override val height: Int
             get() = ScreenRenderer.fontRenderer.FONT_HEIGHT
         override val width: Int
-            get() = ScreenRenderer.fontRenderer.getStringWidth("Test") + 50
+            get() = ScreenRenderer.fontRenderer.getStringWidth("Defense") + 50
 
         override val toggled: Boolean
             get() = config.defenseOverlay

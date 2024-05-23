@@ -4,7 +4,7 @@ import com.kazzutilsv2.KazzUtilsV2.Companion.mc
 import com.kazzutilsv2.core.structure.GuiElement
 import com.kazzutilsv2.utils.graphics.ScreenRenderer
 import com.kazzutilsv2.utils.graphics.SmartFontRenderer
-import com.kazzutilsv2.utils.graphics.colors.CommonColors
+import com.kazzutilsv2.utils.colors.CommonColors
 import gg.essential.elementa.font.DefaultFonts
 import gg.essential.elementa.font.ElementaFonts
 import gg.essential.elementa.utils.withAlpha

@@ -1,10 +1,10 @@
 package com.kazzutilsv2.utils
 
 import com.kazzutilsv2.KazzUtilsV2.Companion.mc
-import com.kazzutilsv2.utils.graphics.colors.ColorFactory.web
-import com.kazzutilsv2.utils.graphics.colors.CustomColor
-import com.kazzutilsv2.utils.graphics.colors.CyclingTwoColorGradient
-import com.kazzutilsv2.utils.graphics.colors.RainbowColor
+import com.kazzutilsv2.utils.colors.ColorFactory.web
+import com.kazzutilsv2.utils.colors.CustomColor
+import com.kazzutilsv2.utils.colors.CyclingTwoColorGradient
+import com.kazzutilsv2.utils.colors.RainbowColor
 import net.minecraft.client.settings.GameSettings
 import java.awt.Color
 import java.io.File
@@ -20,8 +20,8 @@ object Utils {
 
     private fun getCustomColorFromColor(color: Color) = CustomColor.fromInt(color.rgb)
 
-    fun String.removeMinecraftColorCodes(){
-        Regex("§[0-9A-FK-ORa-fk-or]").replace(this, "")
+    fun String.removeMinecraftColorCodes() : String{
+        return Regex("§[0-9A-FK-ORa-fk-or]").replace(this, "")
     }
 
     fun checkSkyblock() {

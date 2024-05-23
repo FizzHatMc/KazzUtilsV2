@@ -15,9 +15,9 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
-package com.kazzutilsv2.utils.graphics.colors
+package com.kazzutilsv2.utils.colors
 
-import com.kazzutilsv2.utils.graphics.colors.ColorSet
+import com.kazzutilsv2.utils.colors.ColorSet
 
 
 /**

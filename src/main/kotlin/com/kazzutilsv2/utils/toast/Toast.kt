@@ -1,4 +1,4 @@
-package com.kazzutilsv2.utils
+package com.kazzutilsv2.utils.toast
 
 import gg.essential.elementa.UIComponent
 import gg.essential.elementa.components.UIContainer

@@ -17,7 +17,7 @@
  */
 package com.kazzutilsv2.utils.graphics
 
-import com.kazzutilsv2.utils.graphics.colors.CustomColor
+import com.kazzutilsv2.utils.colors.CustomColor
 import gg.essential.universal.UResolution
 import net.minecraft.client.Minecraft
 import net.minecraft.client.renderer.GlStateManager

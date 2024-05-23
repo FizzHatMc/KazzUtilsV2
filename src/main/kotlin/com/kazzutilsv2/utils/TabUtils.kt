@@ -12,7 +12,7 @@ import net.minecraftforge.fml.relauncher.SideOnly
 import java.util.regex.Pattern
 import java.util.stream.Collectors
 
-object TabUtils {
+object TabUtils { //TODO: REWORK CLASS = CRASHES ALOt
 
     private val areaPattern: Pattern = Pattern.compile("Area: (.+)")
     private var tablist: List<String>? = null

@@ -18,9 +18,9 @@
 package com.kazzutilsv2.utils.graphics
 
 
-import com.kazzutilsv2.utils.graphics.colors.CommonColors
-import com.kazzutilsv2.utils.graphics.colors.CustomColor
-import com.kazzutilsv2.utils.graphics.colors.MinecraftChatColors
+import com.kazzutilsv2.utils.colors.CommonColors
+import com.kazzutilsv2.utils.colors.CustomColor
+import com.kazzutilsv2.utils.colors.MinecraftChatColors
 import net.minecraft.client.Minecraft
 import net.minecraft.client.gui.FontRenderer
 import net.minecraft.client.renderer.GlStateManager

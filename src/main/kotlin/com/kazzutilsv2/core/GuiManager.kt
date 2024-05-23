@@ -22,7 +22,7 @@ import com.kazzutilsv2.core.structure.GuiElement
 import com.kazzutilsv2.event.RenderHUDEvent
 import com.kazzutilsv2.gui.editing.VanillaEditingGui
 import com.kazzutilsv2.utils.GlState
-import com.kazzutilsv2.utils.Toast
+import com.kazzutilsv2.utils.toast.Toast
 import gg.essential.elementa.ElementaVersion
 import gg.essential.elementa.components.Window
 import gg.essential.elementa.dsl.pixels
@@ -30,7 +30,6 @@ import gg.essential.universal.UChat
 import gg.essential.universal.UMatrixStack
 import gg.essential.universal.UResolution
 import kotlinx.serialization.Serializable
-import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.encodeToString
 import net.minecraft.client.Minecraft
 import net.minecraft.client.gui.ScaledResolution
@@ -139,6 +138,7 @@ object GuiManager : PersistentSave(File(KazzUtilsV2.modDir, "guipositions.json")
 
     @SubscribeEvent(priority = EventPriority.HIGHEST)
     fun onRenderHUD(event: RenderHUDEvent) {
+
         if (Minecraft.getMinecraft().currentScreen is VanillaEditingGui) return
         mc.mcProfiler.startSection("SkytilsHUD")
         gui.draw(UMatrixStack.Compat.get())
