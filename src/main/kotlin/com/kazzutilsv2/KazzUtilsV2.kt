@@ -23,11 +23,14 @@ import com.kazzutilsv2.features.farming.gardenlevel.GardenLevelHud
 import com.kazzutilsv2.features.hud.ArrowsNotif
 import com.kazzutilsv2.features.hud.PetOverlay
 import com.kazzutilsv2.features.hud.SoulflowNotif
+import com.kazzutilsv2.features.hud.uioverlay.DefenseOverlay
 import com.kazzutilsv2.features.keyshortcut.KeyShortcuts
 import com.kazzutilsv2.features.misc.items.GyroRange
 import com.kazzutilsv2.features.test.render.TestClass
 import com.kazzutilsv2.utils.CatacombsUtils
+import com.kazzutilsv2.utils.ChatUtils
 import com.kazzutilsv2.utils.TabUtils
+import com.kazzutilsv2.utils.Utils
 import com.kazzutilsv2.utils.graphics.colors.CustomColor
 import gg.essential.universal.wrappers.message.UTextComponent
 import kotlinx.serialization.KSerializer
@@ -40,6 +43,7 @@ import kotlinx.serialization.json.Json
 import kotlinx.serialization.modules.SerializersModule
 import net.minecraft.client.Minecraft
 import net.minecraft.client.gui.GuiScreen
+import net.minecraftforge.client.event.ClientChatReceivedEvent
 import net.minecraftforge.common.MinecraftForge
 import net.minecraftforge.fml.common.Loader
 import net.minecraftforge.fml.common.Mod
@@ -62,7 +66,8 @@ class KazzUtilsV2 {
 
         arrayOf(
             MythoTrackerHud,
-            KeyShortcuts
+            KeyShortcuts,
+            DefenseOverlay
 
         ).forEach(MinecraftForge.EVENT_BUS::register)
     }
@@ -106,6 +111,8 @@ class KazzUtilsV2 {
         }//each 1/10th second
         if(ticks % 20 == 0L) {
             if(config.mining.starCult) StarCultNotif.checkCult()
+            Utils.checkSkyblock()
+
 
 
         }//each second
@@ -122,6 +129,13 @@ class KazzUtilsV2 {
                 displayScreen = null
             }
         }
+    }
+
+    @SubscribeEvent
+    fun onChat(event: ClientChatReceivedEvent){
+        if(event.type.toInt() != 2)return
+        val message = event.message.unformattedTextForChat
+        ChatUtils.checkRegex(message)
     }
 
 

@@ -15,7 +15,7 @@ public class ItemAnimations {
 
     @Expose
     @ConfigOption(name = "Size", desc = "Scales the size of your currently held item. Default: 0")
-    @ConfigEditorSlider(minValue = -1.5f, maxValue = 1.5f, minStep = 0)
+    @ConfigEditorSlider(minValue = -1.5f, maxValue = 1.5f, minStep = 0.1f)
     public float customSize = 0f;
 
     @Expose

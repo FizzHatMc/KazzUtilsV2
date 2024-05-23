@@ -17,10 +17,8 @@
  */
 package com.kazzutilsv2.utils.graphics
 
+import com.kazzutilsv2.utils.graphics.colors.CustomColor
 import gg.essential.universal.UResolution
-import gg.skytils.skytilsmod.utils.graphics.SmartFontRenderer.TextAlignment
-import gg.skytils.skytilsmod.utils.graphics.SmartFontRenderer.TextShadow
-import gg.skytils.skytilsmod.utils.graphics.colors.CustomColor
 import net.minecraft.client.Minecraft
 import net.minecraft.client.renderer.GlStateManager
 import net.minecraft.client.renderer.RenderHelper
@@ -392,8 +390,8 @@ class ScreenRenderer {
         x: Float,
         y: Float,
         color: CustomColor,
-        alignment: TextAlignment = TextAlignment.LEFT_RIGHT,
-        shadow: TextShadow = TextShadow.NORMAL
+        alignment: SmartFontRenderer.TextAlignment = SmartFontRenderer.TextAlignment.LEFT_RIGHT,
+        shadow: SmartFontRenderer.TextShadow = SmartFontRenderer.TextShadow.NORMAL
     ): Float {
         if (!isRendering) return -1f
         val f = fontRenderer.drawString(text, drawingOrigin.x + x, drawingOrigin.y + y, color, alignment, shadow)
@@ -402,7 +400,7 @@ class ScreenRenderer {
     }
 
     fun drawCenteredString(text: String?, x: Float, y: Float, color: CustomColor): Float {
-        return drawString(text, x, y, color, TextAlignment.MIDDLE, TextShadow.NORMAL)
+        return drawString(text, x, y, color, SmartFontRenderer.TextAlignment.MIDDLE, SmartFontRenderer.TextShadow.NORMAL)
     }
     /** float getStringWidth
      * Gets the length of the string in pixels without

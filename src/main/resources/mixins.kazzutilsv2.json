@@ -1,6 +1,6 @@
 {
-  "package": "kazzutilsv2.mixin",
-  "refmap": "mixins.kazzutilsv2.refmap.json",
+  "package": "com.kazzutilsv2.mixin",
+  "refmap": "mixin.kazzutilsv2.refmap.json",
   "minVersion": "0.7",
   "compatibilityLevel": "JAVA_8",
   "mixins": [

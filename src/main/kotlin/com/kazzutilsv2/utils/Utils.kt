@@ -1,5 +1,6 @@
 package com.kazzutilsv2.utils
 
+import com.kazzutilsv2.KazzUtilsV2.Companion.mc
 import com.kazzutilsv2.utils.graphics.colors.ColorFactory.web
 import com.kazzutilsv2.utils.graphics.colors.CustomColor
 import com.kazzutilsv2.utils.graphics.colors.CyclingTwoColorGradient
@@ -10,12 +11,35 @@ import java.io.File
 
 object Utils {
 
+    var inSkyblock = false
+
     fun getKeyDisplayStringSafe(keyCode: Int): String =
         runCatching { GameSettings.getKeyDisplayString(keyCode) }.getOrNull() ?: "Key $keyCode"
 
     fun File.ensureFile() = (parentFile.exists() || parentFile.mkdirs()) && createNewFile()
 
     private fun getCustomColorFromColor(color: Color) = CustomColor.fromInt(color.rgb)
+
+    fun String.removeMinecraftColorCodes(){
+        Regex("§[0-9A-FK-ORa-fk-or]").replace(this, "")
+    }
+
+    fun checkSkyblock() {
+        val player = mc.thePlayer ?: return
+
+        val scoreboard = player.worldScoreboard
+        val objective = scoreboard.getObjectiveInDisplaySlot(1) // Get the sidebar objective
+
+        if (objective != null) {
+            val displayName = objective.displayName.toString()
+            if (displayName.contains("SKYBLOCK", true)) {
+                inSkyblock = true
+                // Perform actions specific to Skyblock here
+            } else {
+                inSkyblock = false
+            }
+        }
+    }
 
     fun customColorFromString(string: String?): CustomColor {
         if (string == null) throw NullPointerException("Argument cannot be null!")

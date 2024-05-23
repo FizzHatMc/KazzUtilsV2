@@ -20,7 +20,7 @@ package com.kazzutilsv2.core
 import com.kazzutilsv2.KazzUtilsV2
 import com.kazzutilsv2.core.structure.GuiElement
 import com.kazzutilsv2.event.RenderHUDEvent
-import com.kazzutilsv2.gui.LocationEditGui
+import com.kazzutilsv2.gui.editing.VanillaEditingGui
 import com.kazzutilsv2.utils.GlState
 import com.kazzutilsv2.utils.Toast
 import gg.essential.elementa.ElementaVersion
@@ -139,7 +139,7 @@ object GuiManager : PersistentSave(File(KazzUtilsV2.modDir, "guipositions.json")
 
     @SubscribeEvent(priority = EventPriority.HIGHEST)
     fun onRenderHUD(event: RenderHUDEvent) {
-        if (Minecraft.getMinecraft().currentScreen is LocationEditGui) return
+        if (Minecraft.getMinecraft().currentScreen is VanillaEditingGui) return
         mc.mcProfiler.startSection("SkytilsHUD")
         gui.draw(UMatrixStack.Compat.get())
         for ((_, element) in elements) {

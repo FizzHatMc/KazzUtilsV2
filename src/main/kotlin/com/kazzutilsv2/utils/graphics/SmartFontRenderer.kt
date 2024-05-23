@@ -17,9 +17,10 @@
  */
 package com.kazzutilsv2.utils.graphics
 
-import gg.skytils.skytilsmod.utils.graphics.colors.CommonColors
-import gg.skytils.skytilsmod.utils.graphics.colors.CustomColor
-import gg.skytils.skytilsmod.utils.graphics.colors.MinecraftChatColors
+
+import com.kazzutilsv2.utils.graphics.colors.CommonColors
+import com.kazzutilsv2.utils.graphics.colors.CustomColor
+import com.kazzutilsv2.utils.graphics.colors.MinecraftChatColors
 import net.minecraft.client.Minecraft
 import net.minecraft.client.gui.FontRenderer
 import net.minecraft.client.renderer.GlStateManager

@@ -40,4 +40,9 @@ public class Misc {
     @Accordion
     public ItemAnimations itemAnimations = new ItemAnimations();
 
+    @Expose
+    @ConfigOption(name = "Hud", desc = "")
+    @Accordion
+    public Hud hud = new Hud();
+
 }
