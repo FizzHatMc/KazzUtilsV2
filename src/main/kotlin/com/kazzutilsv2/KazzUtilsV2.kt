@@ -5,6 +5,7 @@ import com.kazzutilsv2.config.ConfigManager
 import com.kazzutilsv2.config.KazzUtilsV2Config
 import com.kazzutilsv2.config.categories.misc.feature.arrowsoulflowhud.Soulflow
 import com.kazzutilsv2.core.GuiManager
+import com.kazzutilsv2.core.PersistentSave
 import com.kazzutilsv2.data.enumClass.DunClass
 import com.kazzutilsv2.features.Mining.CommissionTracker
 import com.kazzutilsv2.features.Mining.StarCultNotif
@@ -112,6 +113,7 @@ class KazzUtilsV2 {
         if(ticks % 20 == 0L) {
             if(config.mining.starCult) StarCultNotif.checkCult()
             Utils.checkSkyblock()
+            PersistentSave.loadData()
 
 
 
