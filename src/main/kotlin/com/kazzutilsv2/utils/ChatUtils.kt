@@ -34,7 +34,7 @@ object ChatUtils {
     @SubscribeEvent
     fun onChat(event: ClientChatReceivedEvent){
         if (event.type.toInt() != 2) return
-        //event.isCanceled = true
+        event.isCanceled = true
         val text = event.message.unformattedTextForChat.removeMinecraftColorCodes()
 
         health = hpRegex.find(text)?.groupValues?.let { Pair(it[1], it[2]) }.toString()

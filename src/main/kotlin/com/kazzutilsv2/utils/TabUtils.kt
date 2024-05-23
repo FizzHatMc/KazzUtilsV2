@@ -12,7 +12,7 @@ import net.minecraftforge.fml.relauncher.SideOnly
 import java.util.regex.Pattern
 import java.util.stream.Collectors
 
-object TabUtils { //TODO: REWORK CLASS = CRASHES ALOt
+object TabUtils { //TODO: REWORK CLASS = CRASHES ALOT
 
     private val areaPattern: Pattern = Pattern.compile("Area: (.+)")
     private var tablist: List<String>? = null
@@ -48,7 +48,7 @@ object TabUtils { //TODO: REWORK CLASS = CRASHES ALOt
     var soulflow : Int = 0
 
     fun getPlayerByName(playerName: String): EntityPlayer? {
-        val players: List<EntityPlayer> = mc.theWorld.playerEntities // Assuming mc is your Minecraft instance
+        val players: List<EntityPlayer> = mc.theWorld.playerEntities
 
         for (player in players) {
             if (player.name == playerName) {
