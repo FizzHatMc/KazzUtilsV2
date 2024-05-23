@@ -17,8 +17,6 @@
  */
 package com.kazzutilsv2.utils.colors
 
-import com.kazzutilsv2.utils.colors.ColorSet
-
 
 /**
  * Taken from Wynntils under GNU Affero General Public License v3.0

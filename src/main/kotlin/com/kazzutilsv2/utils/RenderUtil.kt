@@ -2,9 +2,9 @@ package com.kazzutilsv2.utils
 
 import com.kazzutilsv2.KazzUtilsV2.Companion.mc
 import com.kazzutilsv2.core.structure.GuiElement
+import com.kazzutilsv2.utils.colors.CommonColors
 import com.kazzutilsv2.utils.graphics.ScreenRenderer
 import com.kazzutilsv2.utils.graphics.SmartFontRenderer
-import com.kazzutilsv2.utils.colors.CommonColors
 import gg.essential.elementa.font.DefaultFonts
 import gg.essential.elementa.font.ElementaFonts
 import gg.essential.elementa.utils.withAlpha
@@ -25,7 +25,6 @@ import net.minecraft.item.ItemStack
 import net.minecraft.util.*
 import org.lwjgl.opengl.GL11
 import java.awt.Color
-import java.util.concurrent.locks.ReentrantLock
 import kotlin.math.cos
 import kotlin.math.roundToInt
 import kotlin.math.sin
@@ -158,7 +157,7 @@ object RenderUtil {
         }
 
         // x axis
-        c.withParts { r, g, b, a ->
+        c.withParts { r, g, b, _ ->
             Color(
                 (r * 0.8f).toInt(),
                 (g * 0.8f).toInt(),
@@ -179,7 +178,7 @@ object RenderUtil {
         }
 
         // z axis
-        c.withParts { r, g, b, a ->
+        c.withParts { r, g, b, _ ->
             Color(
                 (r * 0.9f).toInt(),
                 (g * 0.9f).toInt(),

@@ -30,7 +30,7 @@ object RenderUtils {
         thickness: Float,
         phase: Boolean
     ) {
-        val renderManager: RenderManager = mc.getRenderManager()
+        val renderManager: RenderManager = mc.renderManager
         val tessellator = Tessellator.getInstance()
         val worldRenderer = Tessellator.getInstance().worldRenderer
 
@@ -261,7 +261,7 @@ object RenderUtils {
 
         GlStateManager.pushMatrix()
 
-        val viewer: Entity = mc.getRenderViewEntity()
+        val viewer: Entity = mc.renderViewEntity
         val viewerX = viewer.lastTickPosX + (viewer.posX - viewer.lastTickPosX) * partialTicks
         val viewerY = viewer.lastTickPosY + (viewer.posY - viewer.lastTickPosY) * partialTicks
         val viewerZ = viewer.lastTickPosZ + (viewer.posZ - viewer.lastTickPosZ) * partialTicks
@@ -282,12 +282,12 @@ object RenderUtils {
 
         drawNametag(str)
 
-        GlStateManager.rotate(-mc.getRenderManager().playerViewY, 0.0f, 1.0f, 0.0f)
-        GlStateManager.rotate(mc.getRenderManager().playerViewX, 1.0f, 0.0f, 0.0f)
+        GlStateManager.rotate(-mc.renderManager.playerViewY, 0.0f, 1.0f, 0.0f)
+        GlStateManager.rotate(mc.renderManager.playerViewX, 1.0f, 0.0f, 0.0f)
 
         GlStateManager.translate(0f, -0.25f, 0f)
-        GlStateManager.rotate(-mc.getRenderManager().playerViewX, 1.0f, 0.0f, 0.0f)
-        GlStateManager.rotate(mc.getRenderManager().playerViewY, 0.0f, 1.0f, 0.0f)
+        GlStateManager.rotate(-mc.renderManager.playerViewX, 1.0f, 0.0f, 0.0f)
+        GlStateManager.rotate(mc.renderManager.playerViewY, 0.0f, 1.0f, 0.0f)
 
         drawNametag(EnumChatFormatting.YELLOW.toString() + Math.round(dist) + "m")
 
@@ -301,7 +301,7 @@ object RenderUtils {
 
         GlStateManager.pushMatrix()
 
-        val viewer: Entity = mc.getRenderViewEntity()
+        val viewer: Entity = mc.renderViewEntity
         val viewerX = viewer.lastTickPosX + (viewer.posX - viewer.lastTickPosX) * partialTicks
         val viewerY = viewer.lastTickPosY + (viewer.posY - viewer.lastTickPosY) * partialTicks
         val viewerZ = viewer.lastTickPosZ + (viewer.posZ - viewer.lastTickPosZ) * partialTicks
@@ -322,12 +322,13 @@ object RenderUtils {
         GlStateManager.scale(scale, scale, scale)
         drawNametag(str)
 
-        GlStateManager.rotate(-mc.getRenderManager().playerViewY, 0.0f, 1.0f, 0.0f)
-        GlStateManager.rotate(mc.getRenderManager().playerViewX, 1.0f, 0.0f, 0.0f)
+        GlStateManager.rotate(-mc.renderManager.playerViewY, 0.0f, 1.0f, 0.0f)
+        GlStateManager.rotate(mc.renderManager.playerViewX, 1.0f, 0.0f, 0.0f)
 
         GlStateManager.translate(0f, -0.25f, 0f)
-        GlStateManager.rotate(-mc.getRenderManager().playerViewX, 1.0f, 0.0f, 0.0f)
-        GlStateManager.rotate(mc.getRenderManager().playerViewY, 0.0f, 1.0f, 0.0f)
+        GlStateManager.rotate(-mc.renderManager.playerViewX, 1.0f, 0.0f, 0.0f)
+        GlStateManager.rotate(mc.renderManager.playerViewY, 0.0f, 1.0f, 0.0f)
+
 
         //drawNametag(EnumChatFormatting.YELLOW.toString()+Math.round(dist)+"m");
         GlStateManager.popMatrix()
@@ -347,8 +348,8 @@ object RenderUtils {
         val f1 = 0.016666668f * f
         GlStateManager.pushMatrix()
         GL11.glNormal3f(0.0f, 1.0f, 0.0f)
-        GlStateManager.rotate(-mc.getRenderManager().playerViewY, 0.0f, 1.0f, 0.0f)
-        GlStateManager.rotate(mc.getRenderManager().playerViewX, 1.0f, 0.0f, 0.0f)
+        GlStateManager.rotate(-mc.renderManager.playerViewY, 0.0f, 1.0f, 0.0f)
+        GlStateManager.rotate(mc.renderManager.playerViewX, 1.0f, 0.0f, 0.0f)
         GlStateManager.scale(-f1, -f1, f1)
         GlStateManager.disableLighting()
         GlStateManager.depthMask(false)
@@ -386,7 +387,7 @@ object RenderUtils {
      * @author Desco
      */
     fun drawOutlinedBoundingBox(aabb: AxisAlignedBB?, color: Color, width: Float, partialTicks: Float) {
-        val render: Entity = mc.getRenderViewEntity()
+        val render: Entity = mc.renderViewEntity
         val realX = interpolate(render.posX, render.lastTickPosX, partialTicks)
         val realY = interpolate(render.posY, render.lastTickPosY, partialTicks)
         val realZ = interpolate(render.posZ, render.lastTickPosZ, partialTicks)
@@ -413,7 +414,7 @@ object RenderUtils {
     }
 
     fun drawLine(pos1: Vec3, pos2: Vec3, color: Color, partialTicks: Float) {
-        val render: Entity = mc.getRenderViewEntity()
+        val render: Entity = mc.renderViewEntity
         val realX = render.lastTickPosX + (render.posX - render.lastTickPosX) * partialTicks
         val realY = render.lastTickPosY + (render.posY - render.lastTickPosY) * partialTicks
         val realZ = render.lastTickPosZ + (render.posZ - render.lastTickPosZ) * partialTicks
@@ -458,7 +459,7 @@ object RenderUtils {
         val tessellator = Tessellator.getInstance()
         val worldrenderer = tessellator.worldRenderer
 
-        val player: Entity = mc.getRenderViewEntity()
+        val player: Entity = mc.renderViewEntity
         val playerX = player.lastTickPosX + (player.posX - player.lastTickPosX) * partialTicks
         val playerY = player.lastTickPosY + (player.posY - player.lastTickPosY) * partialTicks
         val playerZ = player.lastTickPosZ + (player.posZ - player.lastTickPosZ) * partialTicks

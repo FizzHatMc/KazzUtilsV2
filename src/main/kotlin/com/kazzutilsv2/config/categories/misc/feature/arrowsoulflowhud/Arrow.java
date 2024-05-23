@@ -24,18 +24,8 @@ public class Arrow {
     public int minArrow = 0;
 
     @Expose
-    @ConfigOption(name = "Arrows Display  X", desc = "")
-    @ConfigEditorSlider(minValue = 0, maxValue = 1920, minStep = 5)
-    public int ArrowDisplayX = 0;
-
-    @Expose
-    @ConfigOption(name = "Arrows Display Y", desc = "")
-    @ConfigEditorSlider(minValue = 0, maxValue = 1080, minStep = 5)
-    public int ArrowDisplayY = 0;
-
-    @Expose
     @ConfigOption(name = "Arrows Display Text Color", desc = "")
     @ConfigEditorColour
-    public String ArrowwDisplayColor = "0:80:0:0:0";
+    public String ArrowDisplayColor = "0:80:0:0:0";
 
 }

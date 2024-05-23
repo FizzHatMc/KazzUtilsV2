@@ -1,20 +1,16 @@
 package com.kazzutilsv2.features.keyshortcut
 
-import com.google.gson.JsonArray
-import com.google.gson.JsonElement
-import com.google.gson.JsonObject
 import com.kazzutilsv2.KazzUtilsV2
 import com.kazzutilsv2.core.PersistentSave
 import com.kazzutilsv2.utils.ChatUtils
 import gg.essential.universal.UKeyboard
-import net.minecraftforge.client.ClientCommandHandler
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.encodeToString
-import kotlinx.serialization.json.Json
+import kotlinx.serialization.json.decodeFromJsonElement
+import net.minecraftforge.client.ClientCommandHandler
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
 import net.minecraftforge.fml.common.gameevent.InputEvent
 import net.minecraftforge.fml.common.gameevent.InputEvent.KeyInputEvent
-import kotlinx.serialization.json.decodeFromJsonElement
 import org.lwjgl.input.Keyboard
 import org.lwjgl.input.Mouse
 import java.io.File

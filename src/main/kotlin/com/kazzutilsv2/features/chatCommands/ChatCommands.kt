@@ -79,7 +79,7 @@ class ChatCommands {
             }
 
             when (command) {
-                "help" -> ChatUtils.userMessage("Chat Commands: help, ptme, warp, inv / invite, f{floor}, m{floor} ")
+                "help" -> ChatUtils.userMessage("Chat Commands: help, ptme, warp, inv / invite, f{floor}, m{floor} , allinv/invite")
                 "ptme" -> ChatUtils.userMessage("/party transfer $sender")
                 "warp" -> ChatUtils.userMessage("/party warp ")
                 "inv", "invite" -> ChatUtils.userMessage("/party invite " + matcher.group(4))

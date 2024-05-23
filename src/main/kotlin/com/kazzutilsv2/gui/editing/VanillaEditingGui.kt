@@ -6,7 +6,7 @@ import com.kazzutilsv2.core.PersistentSave
 import com.kazzutilsv2.core.structure.GuiElement
 import com.kazzutilsv2.core.structure.LocationButton
 import com.kazzutilsv2.core.structure.ResizeButton
-import com.kazzutilsv2.core.structure.ResizeButton.*
+import com.kazzutilsv2.core.structure.ResizeButton.Corner
 import com.kazzutilsv2.gui.ReopenableGUI
 import com.kazzutilsv2.utils.graphics.SmartFontRenderer
 import gg.essential.universal.UResolution

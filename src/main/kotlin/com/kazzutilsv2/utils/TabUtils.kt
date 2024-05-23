@@ -15,15 +15,10 @@ import java.util.stream.Collectors
 object TabUtils { //TODO: REWORK CLASS = CRASHES ALOT
 
     private val areaPattern: Pattern = Pattern.compile("Area: (.+)")
-    private var tablist: List<String>? = null
+    private var trim: String = ""
+    private var p: PlayerInfoOrdering = PlayerInfoOrdering()
     var playerClass = ""
     var area: String = ""
-    var explosivity: Boolean = false
-    var maxVisitors: Boolean = false
-    var emptyComposter: Boolean = false
-    var gardenMilestone: String = ""
-    var timeTillNextVisitor: String = ""
-    var numVisitors: Int = 0
     var archerName: String = ""
     var tankName: String = ""
     var healerName: String = ""
@@ -31,19 +26,10 @@ object TabUtils { //TODO: REWORK CLASS = CRASHES ALOT
     var berserkerName: String = ""
     var gardenLevel: Int = 0
     var gardenPercent: Double = 0.0
-    var trim: String = ""
     var contest : ArrayList<String?> = ArrayList()
     var time: String = ""
-    var p: playerInfoOrdering = playerInfoOrdering()
-    private var petFlag = false
-    private var petFlagCount = 0
     var petName: String = ""
     var petXp: String? = ""
-    var petNameUnform: String = ""
-
-    //public static String petXp = "";
-    var gardenLevelBool: Boolean = false
-    var gardenLevelString: String = ""
     var comms: ArrayList<String?> = ArrayList()
     var soulflow : Int = 0
 
@@ -60,18 +46,18 @@ object TabUtils { //TODO: REWORK CLASS = CRASHES ALOT
     }
 
     fun getPlayerNameByClass(playerClass: String): String {
-        when (playerClass) {
-            "Archer" -> return archerName
-            "Tank" -> return tankName
-            "Healer" -> return healerName
-            "Mage" -> return mageName
-            "Berserker" -> return berserkerName
-            else -> return ""
+        return when (playerClass) {
+            "Archer" -> archerName
+            "Tank" -> tankName
+            "Healer" -> healerName
+            "Mage" -> mageName
+            "Berserker" -> berserkerName
+            else -> ""
         }
     }
 
     @SideOnly(Side.CLIENT)
-    class playerInfoOrdering : Ordering<NetworkPlayerInfo?>() {
+    class PlayerInfoOrdering : Ordering<NetworkPlayerInfo?>() {
         override fun compare(info1: NetworkPlayerInfo?, info2: NetworkPlayerInfo?): Int {
             if (info1 == null) return -1
             if (info2 == null) return 0
@@ -90,7 +76,7 @@ object TabUtils { //TODO: REWORK CLASS = CRASHES ALOT
     private fun fetchTabEntries(): List<NetworkPlayerInfo> {
         var entries = emptyList<NetworkPlayerInfo>()
         if (mc.thePlayer != null) {
-            entries = p.sortedCopy(mc.thePlayer.sendQueue.getPlayerInfoMap())
+            entries = p.sortedCopy(mc.thePlayer.sendQueue.playerInfoMap)
         }
         return entries
     }
@@ -102,36 +88,104 @@ object TabUtils { //TODO: REWORK CLASS = CRASHES ALOT
         if (mc.thePlayer == null) return
         if (mc.theWorld == null) return
 
-        val scoreboardList = mapNotNull(fetchTabEntries()) ?: return
+        val scoreboardList = mapNotNull(fetchTabEntries())
 
         for (line in scoreboardList) {
             trim = line!!.trim { it <= ' ' }
-
             val matcher = areaPattern.matcher(trim)
             if (matcher.find()) {
                 area = matcher.group(1)
             }
-
+            /*
             if (petFlag && petFlagCount <= 1) {
                 if (petFlagCount == 0) petName = line.substring(trim.indexOf(']') + 2)
                 if (petFlagCount == 1) petXp = line
-
-                petFlagCount++
-            } else {
+            petFlagCount++
+            {} else {
                 petFlagCount = 0
                 petFlag = false
             }
+            */
 
-
+            when {
+                trim.contains("Pet:", ignoreCase = true) -> {
+                    val index = scoreboardList.indexOf(line) + 1
+                    petName = scoreboardList.getOrNull(index)?.substring(trim.indexOf(']') + 2) ?: return
+                    petXp = scoreboardList.getOrNull(index + 1) ?: return
+                }
+                trim.contains("Contest:") -> {
+                    val index = scoreboardList.indexOf(line) + 1
+                    time = scoreboardList.getOrNull(index)
+                        ?.substring(scoreboardList[index]?.indexOf(": ")?.plus(1) ?: return).toString()
+                    for (i in 1..3) {
+                        contest.add(scoreboardList.getOrNull(index + i) ?: continue)
+                    }
+                }
+                trim.contains("Garden Level:") -> {
+                    val split = trim.substring(trim.indexOf(":") + 1)
+                    var lvl = split.split(" ".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()[1]
+                    lvl = lvl.replace(" ", "")
+                    val test: Int? = NumberUtils.getNumber(lvl)
+                    if (test != null) {
+                        gardenLevel = test
+                        if (gardenLevel != 15) {
+                            gardenPercent = trim.substring(trim.indexOf("(") + 1, trim.indexOf(")") - 7).toDouble()
+                        }
+                    } else {
+                        if (lvl != "XV") {
+                            gardenLevel = NumberUtils.toInteger(lvl)
+                            gardenPercent = trim.substring(trim.indexOf("(") + 1, trim.indexOf(")") - 1).toDouble()
+                        } else {
+                            gardenLevel = NumberUtils.toInteger("XV")
+                        }
+                    }
+                }
+                trim.contains("Soulflow: ") -> {
+                    soulflow = trim.substring(trim.indexOf('S') + "Soulflow: ".length).replace(",", "").toInt()
+                }
+                trim.contains("Dungeon: Catacombs") -> {
+                    // area = "Catacombs"
+                }
+                trim.contains("Commissions:") -> {
+                    val index = scoreboardList.indexOf(line)
+                    for (i in 1..5) {
+                        if (scoreboardList.getOrNull(index + i).isNullOrBlank()) return
+                        comms.add(scoreboardList[index + i])
+                    }
+                }
+                line.contains("(Archer") -> {
+                    val archerName = line.split(" ".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()[1]
+                    if (archerName.contains(mc.thePlayer.name)) playerClass = "Archer"
+                }
+                line.contains("(Tank") -> {
+                    val tankName = line.split(" ".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()[1]
+                    if (tankName.contains(mc.thePlayer.name)) playerClass = "Tank"
+                }
+                line.contains("(Mage") -> {
+                    val mageName = line.split(" ".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()[1]
+                    if (mageName.contains(mc.thePlayer.name)) playerClass = "Mage"
+                }
+                line.contains("(Healer") -> {
+                    val healerName = line.split(" ".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()[1]
+                    if (healerName.contains(mc.thePlayer.name)) playerClass = "Healer"
+                }
+                line.contains("(Berserk") -> {
+                    val berserkerName = line.split(" ".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()[1]
+                    if (berserkerName.contains(mc.thePlayer.name)) playerClass = "Berserk"
+                }
+            }
+            /*
+            if(trim.contains("Pet:",true)){
+                var index = scoreboardList.indexOf(line) + 1
+                petName = scoreboardList[index]?.substring(trim.indexOf(']') + 2) ?: return
+                petXp = scoreboardList[index+1] ?: return
+            }
             if (trim.contains("Contest:")) {
                 val index = scoreboardList.indexOf(line) + 1
-                //time = scoreboardList[index]!!.substring(scoreboardList[index]!!.indexOf(": ") + 1) ?: return
                 time = scoreboardList[index]?.substring((scoreboardList[index]?.indexOf(": ") )?.plus(1) ?: return).toString()
-
                 for(i in 1..3){
                     contest.add(scoreboardList[index+i])
                 }
-
             } else if (trim.contains("Garden Level:")) {
                 val split = trim.substring(trim.indexOf(":") + 1)
                 var lvl = split.split(" ".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()[1]
@@ -154,15 +208,17 @@ object TabUtils { //TODO: REWORK CLASS = CRASHES ALOT
             } else if (trim.contains("Pet:")) {
                 petFlag = true
             } else if (trim.contains("Dungeon: Catacombs")) {
-                area = "Catacombs"
+                //area = "Catacombs"
             } else if (trim.contains("Commissions:")) {
-                area = "Dwarven"
+                //area = "Dwarven"
                 var index = scoreboardList.indexOf(line)
                 for(i in 1..5){
                     if(scoreboardList[index+i] == "") return
                     comms.add(scoreboardList[index+i])
                 }
             }
+
+
 
             if(trim.contains("Soulflow: ")){
                 soulflow = trim.substring( trim.indexOf('S')+"Soulflow: ".length).replace(",","").toInt()
@@ -190,6 +246,8 @@ object TabUtils { //TODO: REWORK CLASS = CRASHES ALOT
                 //ChatUtils.messageToChat("Player: $berserkerName class: $playerClass"+mc.thePlayer.name)
             }
         }
+        */
+        }
     }
 
     private fun isSpectator(gameType: GameType): Boolean {
@@ -205,17 +263,17 @@ object TabUtils { //TODO: REWORK CLASS = CRASHES ALOT
             .collect(Collectors.toList())
     }
 
-    var playerOrdering: Collection<NetworkPlayerInfo>? = null
+    private var playerOrdering: Collection<NetworkPlayerInfo>? = null
 
     fun readTabList(): List<String> {
         val thePlayer = Minecraft.getMinecraft().thePlayer
         playerOrdering = thePlayer.sendQueue.playerInfoMap
         val result: MutableList<String> = ArrayList()
         for (info in (playerOrdering as MutableCollection<NetworkPlayerInfo>?)!!) {
-            val name: String = mc.ingameGUI.getTabList().getPlayerName(info)
+            val name: String = mc.ingameGUI.tabList.getPlayerName(info)
             result.add(stripVanillaMessage(name))
         }
-        if (!result.isEmpty()) {
+        if (result.isNotEmpty()) {
             result.removeAt(result.size - 1)
         }
         return result

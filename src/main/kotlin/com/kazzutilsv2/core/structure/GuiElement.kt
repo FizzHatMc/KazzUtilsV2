@@ -17,7 +17,6 @@
  */
 package com.kazzutilsv2.core.structure
 
-import com.kazzutilsv2.core.GuiManager
 import com.kazzutilsv2.utils.graphics.ScreenRenderer
 import com.kazzutilsv2.utils.graphics.SmartFontRenderer
 import gg.essential.universal.UResolution

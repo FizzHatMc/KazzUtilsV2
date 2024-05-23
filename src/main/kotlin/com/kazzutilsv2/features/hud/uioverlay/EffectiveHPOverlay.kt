@@ -5,7 +5,6 @@ import com.kazzutilsv2.KazzUtilsV2.Companion.mc
 import com.kazzutilsv2.core.structure.GuiElement
 import com.kazzutilsv2.utils.ChatUtils
 import com.kazzutilsv2.utils.graphics.ScreenRenderer
-import kotlinx.coroutines.channels.Channel
 import java.awt.Color
 
 object EffectiveHPOverlay {

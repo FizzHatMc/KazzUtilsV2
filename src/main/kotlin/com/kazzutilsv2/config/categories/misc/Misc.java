@@ -1,7 +1,7 @@
 package com.kazzutilsv2.config.categories.misc;
 
 import com.google.gson.annotations.Expose;
-import com.kazzutilsv2.config.categories.hud.mythologicalEvent;
+import com.kazzutilsv2.config.categories.event.mythologicalEvent;
 import com.kazzutilsv2.config.categories.misc.feature.*;
 import io.github.notenoughupdates.moulconfig.annotations.Accordion;
 import io.github.notenoughupdates.moulconfig.annotations.ConfigOption;

@@ -1,4 +1,4 @@
-package com.kazzutilsv2.config.categories.hud;
+package com.kazzutilsv2.config.categories.event;
 
 import com.google.gson.annotations.Expose;
 import io.github.notenoughupdates.moulconfig.annotations.ConfigEditorBoolean;
@@ -12,16 +12,6 @@ public class mythologicalEvent {
     @ConfigOption(name = "Mythological Tracker ", desc = "")
     @ConfigEditorBoolean
     public boolean mytholocialTracker = false;
-
-    @Expose
-    @ConfigOption(name = "Mythological Tracker X", desc = "")
-    @ConfigEditorSlider(minValue = 0, maxValue = 1920, minStep = 5)
-    public int mytholocialTrackerX = 0;
-
-    @Expose
-    @ConfigOption(name = "Mythological Tracker Y", desc = "")
-    @ConfigEditorSlider(minValue = 0, maxValue = 1080, minStep = 5)
-    public int mytholocialTrackerY = 0;
 
     @Expose
     @ConfigOption(name = "Mythological Tracker Text Color", desc = "")

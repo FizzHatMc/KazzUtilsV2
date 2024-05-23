@@ -42,13 +42,13 @@ class CatacombsUtils {
 
 
 
-    fun stripColorCodes(string: String): String {
+    private fun stripColorCodes(string: String): String {
         return string.replace("§.".toRegex(), "")
     }
 
 
     fun getLines(): List<String> {
-        val scoreboard: Scoreboard = mc.thePlayer.getWorldScoreboard()
+        val scoreboard: Scoreboard = mc.thePlayer.worldScoreboard
         val sidebarObjective = scoreboard.getObjectiveInDisplaySlot(1)
         val scores: List<Score> = ArrayList(scoreboard.getSortedScores(sidebarObjective))
         val lines: MutableList<String> = ArrayList()
@@ -68,11 +68,9 @@ class CatacombsUtils {
             return false
         }
         val line = lines[3]
-        var unformattedText: String? = null
-        if (line != null) {
-            unformattedText = line.replace("\\p{So}|\\p{Sk}".toRegex(), "")
-            unformattedText = stripColorCodes(unformattedText)
-        }
+        var unformattedText: String?
+        unformattedText = line.replace("\\p{So}|\\p{Sk}".toRegex(), "")
+        unformattedText = stripColorCodes(unformattedText)
         if ("  The Catacombs (M7)" == unformattedText) {
             inM7 = true
             return true

@@ -2,42 +2,52 @@ package com.kazzutilsv2.features.hud
 
 import com.kazzutilsv2.KazzUtilsV2
 import com.kazzutilsv2.KazzUtilsV2.Companion.mc
+import com.kazzutilsv2.core.structure.GuiElement
 import com.kazzutilsv2.utils.ColorUtils.toChromaColorInt
-import com.kazzutilsv2.utils.ContainerUtils
 import com.kazzutilsv2.utils.RenderUtils
 import com.kazzutilsv2.utils.TabUtils
+import com.kazzutilsv2.utils.graphics.ScreenRenderer
 import net.minecraft.client.gui.ScaledResolution
-import net.minecraft.item.ItemStack
 import net.minecraft.util.EnumChatFormatting
 import net.minecraftforge.client.event.RenderGameOverlayEvent
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
 
-class SoulflowNotif {
+object SoulflowNotif {
 
-    @SubscribeEvent
-    fun onRenderText(event: RenderGameOverlayEvent.Text) {
-        if(!KazzUtilsV2.config.misc.arrowSoulflowNotif.soulflow.soulflowNotif) return
-        if (event.type === RenderGameOverlayEvent.ElementType.TEXT) {
+    init {
+        SoulflowNotifElement()
+    }
 
+    class SoulflowNotifElement : GuiElement("Soulflow Notif Display", 1f, 10,10) {
+        val config = KazzUtilsV2.config.misc.arrowSoulflowNotif.soulflow
+        var message : String? = ""
+
+        override fun render() {
             var amount = TabUtils.soulflow
+            message = amount.toString()
+            if(amount<= config.minSoulflow && config.soulflowNotif) RenderUtils.drawTitle("Soulflow",""+amount, EnumChatFormatting.RED)
+            if (toggled) {
+                mc.fontRendererObj.drawStringWithShadow(message, x, y, config.soulflowDisplayColor.toChromaColorInt())
+            }
+        }
 
-            if(amount<= KazzUtilsV2.config.misc.arrowSoulflowNotif.soulflow.minSoulflow) RenderUtils.drawTitle("Soulflow",""+amount, EnumChatFormatting.RED)
+        override fun demoRender() {
+            mc.fontRendererObj.drawStringWithShadow("Soulflow", x, y, config.soulflowDisplayColor.toChromaColorInt())
+        }
 
-            val scaledResolution = ScaledResolution(mc)
-            val fontRenderer = mc.fontRendererObj
+        override val height: Int
+            get() = ScreenRenderer.fontRenderer.FONT_HEIGHT
+        override val width: Int
+            get() = ScreenRenderer.fontRenderer.getStringWidth("Soulflow") + 50
 
-            val text : String = amount.toString()
-            val width = fontRenderer.getStringWidth(text) + (KazzUtilsV2.config.misc.arrowSoulflowNotif.soulflow.soulflowDisplayX/1.5)
-            val height = fontRenderer.FONT_HEIGHT + (KazzUtilsV2.config.misc.arrowSoulflowNotif.soulflow.soulflowDisplayY/1.5)
-            val scaledX = scaledResolution.scaledWidth - width
-            val scaledY = scaledResolution.scaledHeight - height  // Adjust y position based on loop iteratione
-            val color = KazzUtilsV2.config.misc.arrowSoulflowNotif.soulflow.soulflowDisplayColor.toChromaColorInt()
+        override val toggled: Boolean
+            get() = config.soulflowDisplay
 
-            fontRenderer.drawString(text, scaledX.toFloat(), scaledY .toFloat(), color, true)
-
-
-
+        init {
+            KazzUtilsV2.guiManager.registerElement(this)
         }
     }
+
+
 
 }

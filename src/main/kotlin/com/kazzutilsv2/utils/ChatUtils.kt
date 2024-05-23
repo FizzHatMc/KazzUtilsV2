@@ -1,22 +1,22 @@
 package com.kazzutilsv2.utils
 
+import com.kazzutilsv2.KazzUtilsV2
 import com.kazzutilsv2.KazzUtilsV2.Companion.mc
 import com.kazzutilsv2.utils.Utils.removeMinecraftColorCodes
 import net.minecraft.util.ChatComponentText
 import net.minecraftforge.client.event.ClientChatReceivedEvent
+import net.minecraftforge.client.event.RenderGameOverlayEvent
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
 
 object ChatUtils {
 
-    val hpRegex = Regex("""(\d+)/(\d+)❤""")
-    val defenseRegex = Regex("""(\d+)❈ Defense""")
-    val areaRegex = Regex("""⏣ ([^\d]+?)\s{2,}""")
-    val manaUseRegex = Regex("""-(\d+) Mana""")
-    val manaRegex = Regex("""(\d+)/(\d+)✎ Mana""")
-    val skillRegex = Regex("\\+(?<gained>[0-9,.]+) (?<skillName>[A-Za-z]+) (?<progress>\\((((?<current>[0-9.,kM]+)/(?<total>[0-9.,kM]+))|((?<percent>[0-9.,]+)%))\\))")
+    private val hpRegex = Regex("""(\d+)/(\d+)❤""")
+    private val defenseRegex = Regex("""(\d+)❈ Defense""")
+    private val manaUseRegex = Regex("""-(\d+) Mana""")
+    private val manaRegex = Regex("""(\d+)/(\d+)✎ Mana""")
+    private val skillRegex = Regex("\\+(?<gained>[0-9,.]+) (?<skillName>[A-Za-z]+) (?<progress>\\((((?<current>[0-9.,kM]+)/(?<total>[0-9.,kM]+))|((?<percent>[0-9.,]+)%))\\))")
 
     var health: String? = null
-    var area: String? = null
     var manaUse: String? = null
     var mana: String? = null
     var skill: String? = null
@@ -39,12 +39,21 @@ object ChatUtils {
 
         health = hpRegex.find(text)?.groupValues?.let { Pair(it[1], it[2]) }.toString()
         defense = defenseRegex.find(text)?.groupValues?.get(1)
-        area = areaRegex.find(text)?.groupValues?.get(1)
         manaUse = manaUseRegex.find(text)?.groupValues?.get(1)
         mana = manaRegex.find(text)?.groupValues?.let { Pair(it[1], it[2]) }.toString()
         skill =  skillRegex.find(text)?.groupValues?.let { "+${it[1]} ${it[2]} ${it[3]}" }
 
         //defense?.let { ChatUtils.messageToChat(it)}
+
+
+    }
+
+    @SubscribeEvent
+    fun onRenderGameOverlayEvent(event: RenderGameOverlayEvent.Pre){
+        val conf = KazzUtilsV2.config.misc.hud
+        if(conf.hideArmor && event.type ==  RenderGameOverlayEvent.ElementType.ARMOR) event.isCanceled = true
+        if(conf.hideHP && event.type ==  RenderGameOverlayEvent.ElementType.HEALTH) event.isCanceled = true
+        if(conf.hideFood && event.type ==  RenderGameOverlayEvent.ElementType.FOOD) event.isCanceled = true
 
 
     }

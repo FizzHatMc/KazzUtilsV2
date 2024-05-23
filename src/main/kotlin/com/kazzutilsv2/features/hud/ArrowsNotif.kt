@@ -2,26 +2,33 @@ package com.kazzutilsv2.features.hud
 
 import com.kazzutilsv2.KazzUtilsV2
 import com.kazzutilsv2.KazzUtilsV2.Companion.mc
+import com.kazzutilsv2.core.structure.GuiElement
 import com.kazzutilsv2.utils.ColorUtils.toChromaColorInt
 import com.kazzutilsv2.utils.ContainerUtils
 import com.kazzutilsv2.utils.RenderUtils
+import com.kazzutilsv2.utils.TabUtils
+import com.kazzutilsv2.utils.graphics.ScreenRenderer
 import net.minecraft.client.gui.ScaledResolution
 import net.minecraft.item.ItemStack
 import net.minecraft.util.EnumChatFormatting
 import net.minecraftforge.client.event.RenderGameOverlayEvent
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
 
-class ArrowsNotif {
+object ArrowsNotif {
 
-    @SubscribeEvent
-    fun onRenderText(event: RenderGameOverlayEvent.Text) {
-        if(!KazzUtilsV2.config.misc.arrowSoulflowNotif.arrow.ArrowDisplay) return
-        if (event.type === RenderGameOverlayEvent.ElementType.TEXT) {
+    init {
+        ArrowsNotifElement()
+    }
 
+    class ArrowsNotifElement : GuiElement("Arrow Notif Display", 1f, 10,10) {
+        val config = KazzUtilsV2.config.misc.arrowSoulflowNotif.arrow!!
+        var message : String? = ""
+
+        override fun render() {
             val quiver: ItemStack? = ContainerUtils.checkInventoryForName("Quiver", mc.thePlayer.inventory)
             val quiverLore: List<String> = ContainerUtils.getLore(quiver)
-            var arrowType: String = ""
-            var amount: Int = 0
+            var arrowType = ""
+            var amount = 0
 
             for (tag in quiverLore) {
                 if (tag.contains("Active Arrow:")) {
@@ -29,24 +36,30 @@ class ArrowsNotif {
                     amount = tag.substring(tag.indexOf('(') + 3, tag.indexOf(')') - 2).toInt()
                 }
             }
-           //max 2880
-            if(amount<=KazzUtilsV2.config.misc.arrowSoulflowNotif.arrow.minArrow) RenderUtils.drawTitle("Arrows",""+amount,EnumChatFormatting.RED)
+            //max 2880
+            if(amount<=config.minArrow && config.ArrowNotif) RenderUtils.drawTitle("Arrows",""+amount,EnumChatFormatting.RED)
 
+            message = arrowType + " / " + amount + "x"
+            if(arrowType == "") return
+            if (toggled) {
+                mc.fontRendererObj.drawStringWithShadow(message, x, y, config.ArrowDisplayColor.toChromaColorInt())
+            }
+        }
 
-            val scaledResolution = ScaledResolution(mc)
-            val fontRenderer = mc.fontRendererObj
+        override fun demoRender() {
+            mc.fontRendererObj.drawStringWithShadow("Arrows", x, y, config.ArrowDisplayColor.toChromaColorInt())
+        }
 
-            val text = arrowType + " / " + amount + "x"
-            val width = fontRenderer.getStringWidth(text) + (KazzUtilsV2.config.misc.arrowSoulflowNotif.arrow.ArrowDisplayX/1.5)
-            val height = fontRenderer.FONT_HEIGHT + (KazzUtilsV2.config.misc.arrowSoulflowNotif.arrow.ArrowDisplayY/1.5)
-            val scaledX = scaledResolution.scaledWidth - width
-            val scaledY = scaledResolution.scaledHeight - height  // Adjust y position based on loop iteratione
-            val color = KazzUtilsV2.config.misc.arrowSoulflowNotif.arrow.ArrowwDisplayColor.toChromaColorInt()
+        override val height: Int
+            get() = ScreenRenderer.fontRenderer.FONT_HEIGHT
+        override val width: Int
+            get() = ScreenRenderer.fontRenderer.getStringWidth("Arrows") + 50
 
-            fontRenderer.drawString(text, scaledX.toFloat(), scaledY .toFloat(), color, true)
+        override val toggled: Boolean
+            get() = config.ArrowDisplay
 
-
-
+        init {
+            KazzUtilsV2.guiManager.registerElement(this)
         }
     }
 

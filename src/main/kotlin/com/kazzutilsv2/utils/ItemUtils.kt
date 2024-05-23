@@ -9,7 +9,7 @@ import java.awt.Color
 object ItemUtils {
 
     private val FORMATTING_CODE_PATTERN = Regex("§[0-9a-fk-or]", RegexOption.IGNORE_CASE)
-    public val mc = Minecraft.getMinecraft()
+    val mc = Minecraft.getMinecraft()!!
 
     val String?.noControlCodes: String
         get() = this?.let { FORMATTING_CODE_PATTERN.replace(it, "") } ?: ""
@@ -101,7 +101,7 @@ object ItemUtils {
             val currentLine = lore[i]
             val match = rarityRegex.find(currentLine) ?: continue
             val rarity: String = match.groups["rarity"]?.value ?: continue
-            for (itemRarity in ItemRarity.values()) {
+            for (itemRarity in ItemRarity.entries) {
                 if (currentLine.noControlCodes.startsWith(itemRarity.loreName)) {
                     return itemRarity
                 }

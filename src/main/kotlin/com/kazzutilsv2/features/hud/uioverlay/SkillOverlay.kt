@@ -14,7 +14,7 @@ object SkillOverlay {
     }
 
     class SkillOverlayElement : GuiElement("Skill Overlay Display", 1f, 10,10) {
-        val config = KazzUtilsV2.config.misc.hud
+        val config = KazzUtilsV2.config.misc.hud!!
         var message : String? = ""
 
         override fun render() {

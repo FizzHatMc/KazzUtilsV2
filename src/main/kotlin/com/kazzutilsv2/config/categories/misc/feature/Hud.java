@@ -27,8 +27,25 @@ public class Hud {
     public boolean hpOverlay = false;
 
     @Expose
+    @ConfigOption(name = "Hide Vanilla Health", desc = "")
+    @ConfigEditorBoolean
+    public boolean hideHP = false;
+
+    @Expose
+    @ConfigOption(name = "Hide Vanilla Food", desc = "")
+    @ConfigEditorBoolean
+    public boolean hideFood = false;
+
+    @Expose
+    @ConfigOption(name = "Hide Vanilla Armor", desc = "")
+    @ConfigEditorBoolean
+    public boolean hideArmor = false;
+
+    @Expose
     @ConfigOption(name = "EffectiveHP Overlay", desc = "")
     @ConfigEditorBoolean
     public boolean effectiveHPOverlay = false;
+
+
 
 }

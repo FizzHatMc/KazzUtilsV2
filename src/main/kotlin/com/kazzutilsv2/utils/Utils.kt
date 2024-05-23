@@ -32,12 +32,7 @@ object Utils {
 
         if (objective != null) {
             val displayName = objective.displayName.toString()
-            if (displayName.contains("SKYBLOCK", true)) {
-                inSkyblock = true
-                // Perform actions specific to Skyblock here
-            } else {
-                inSkyblock = false
-            }
+            inSkyblock = displayName.contains("SKYBLOCK", true)
         }
     }
 

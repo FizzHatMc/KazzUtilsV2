@@ -4,11 +4,7 @@ import com.kazzutilsv2.KazzUtilsV2
 import com.kazzutilsv2.KazzUtilsV2.Companion.mc
 import com.kazzutilsv2.core.structure.GuiElement
 import com.kazzutilsv2.utils.ChatUtils
-import com.kazzutilsv2.utils.TabUtils
-import com.kazzutilsv2.utils.Utils
 import com.kazzutilsv2.utils.graphics.ScreenRenderer
-import com.kazzutilsv2.utils.graphics.SmartFontRenderer
-import com.kazzutilsv2.utils.colors.CommonColors
 import java.awt.Color
 
 object DefenseOverlay {

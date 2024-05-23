@@ -243,15 +243,15 @@ class SmartFontRenderer : FontRenderer(
             if (text[index] == '§' && index + 1 < text.length) {
                 var detectedColor: Int?
                 detectedColor = decodeCommonColor(text[index + 1])
-                if (detectedColor == null) { // means that or it's an invalid color code or a special one
+                if (detectedColor == null) { // means that, or it's an invalid color code or a special one
                     when (text[index + 1]) {
                         'k' -> {
                             obfuscated = true
-                            index++ // skips the the next char
+                            index++ // skips the next char
                         }
                         'o' -> {
                             italic = true
-                            index++ // skips the the next char
+                            index++ // skips the next char
                         }
                         'l' -> {
                             bold = true
@@ -262,7 +262,7 @@ class SmartFontRenderer : FontRenderer(
                             italic = false
                             bold = false
                             detectedColor = 0xFFFFFF
-                            index++ // skips the the next char
+                            index++ // skips the next char
                         }
                     }
                 } else { // if a valid color is found remove special effects

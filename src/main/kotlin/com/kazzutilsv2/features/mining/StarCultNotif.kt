@@ -1,4 +1,4 @@
-package com.kazzutilsv2.features.Mining
+package com.kazzutilsv2.features.mining
 
 import com.kazzutilsv2.KazzUtilsV2.Companion.mc
 import com.kazzutilsv2.handler.ScoreboardHandler

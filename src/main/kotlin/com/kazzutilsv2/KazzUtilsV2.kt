@@ -3,12 +3,11 @@ package com.kazzutilsv2
 import com.kazzutilsv2.commands.CommandManager
 import com.kazzutilsv2.config.ConfigManager
 import com.kazzutilsv2.config.KazzUtilsV2Config
-import com.kazzutilsv2.config.categories.misc.feature.arrowsoulflowhud.Soulflow
 import com.kazzutilsv2.core.GuiManager
 import com.kazzutilsv2.core.PersistentSave
 import com.kazzutilsv2.data.enumClass.DunClass
-import com.kazzutilsv2.features.Mining.CommissionTracker
-import com.kazzutilsv2.features.Mining.StarCultNotif
+import com.kazzutilsv2.features.mining.CommissionTracker
+import com.kazzutilsv2.features.mining.StarCultNotif
 import com.kazzutilsv2.features.chatCommands.ChatCommands
 import com.kazzutilsv2.features.dungeon.F7.CrystalWaypoints
 import com.kazzutilsv2.features.dungeon.F7.TerminalWaypoints
@@ -34,7 +33,6 @@ import com.kazzutilsv2.utils.TabUtils
 import com.kazzutilsv2.utils.Utils
 import com.kazzutilsv2.utils.colors.CustomColor
 import com.kazzutilsv2.utils.graphics.ScreenRenderer
-import gg.essential.universal.wrappers.message.UTextComponent
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.descriptors.PrimitiveKind
 import kotlinx.serialization.descriptors.PrimitiveSerialDescriptor
@@ -44,19 +42,15 @@ import kotlinx.serialization.encoding.Encoder
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.modules.SerializersModule
 import net.minecraft.client.Minecraft
-import net.minecraft.client.gui.FontRenderer
 import net.minecraft.client.gui.GuiScreen
-import net.minecraftforge.client.event.ClientChatReceivedEvent
 import net.minecraftforge.common.MinecraftForge
 import net.minecraftforge.fml.common.Loader
 import net.minecraftforge.fml.common.Mod
 import net.minecraftforge.fml.common.event.FMLInitializationEvent
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent
-import net.minecraftforge.fml.common.eventhandler.EventPriority
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
 import net.minecraftforge.fml.common.gameevent.TickEvent
-import org.apache.commons.lang3.StringUtils
 import java.io.File
 import java.util.*
 
@@ -64,7 +58,7 @@ import java.util.*
 class KazzUtilsV2 {
 
     @Mod.EventHandler
-    fun init(event: FMLInitializationEvent) {
+    fun init(@Suppress("UNUSED_PARAMETER") event: FMLInitializationEvent) {
         configManager = ConfigManager()
         MinecraftForge.EVENT_BUS.register(configManager)
 
@@ -80,6 +74,12 @@ class KazzUtilsV2 {
             SkillOverlay,
             HPOverlay,
             ManaOverlay,
+            ArrowsNotif,
+            SoulflowNotif,
+            PetOverlay,
+            CommissionTracker,
+            GardenLevelHud,
+            ContestHud,
 
 
         ).forEach(MinecraftForge.EVENT_BUS::register)
@@ -114,7 +114,7 @@ class KazzUtilsV2 {
     }
 
 
-    var ticks = 0L
+    private var ticks = 0L
 
     @SubscribeEvent
     fun onTick(event: TickEvent.ClientTickEvent) {
@@ -135,12 +135,6 @@ class KazzUtilsV2 {
 
 
         }//each second
-        if(ticks % 600 == 0L) {
-
-        }//30 sec
-        if(ticks % 6000 == 0L) {
-
-        }//5 min
 
         if (displayScreen != null) {
             if (mc.thePlayer?.openContainer == mc.thePlayer?.inventoryContainer) {
@@ -149,14 +143,6 @@ class KazzUtilsV2 {
             }
         }
     }
-
-    @SubscribeEvent
-    fun onChat(event: ClientChatReceivedEvent){
-        if(event.type.toInt() != 2)return
-        val message = event.message.unformattedTextForChat
-    }
-
-
 
     companion object {
         lateinit var configManager: ConfigManager
@@ -199,7 +185,7 @@ class KazzUtilsV2 {
 
 
     private fun reg(obj: Any){
-        MinecraftForge.EVENT_BUS.register(obj);
+        MinecraftForge.EVENT_BUS.register(obj)
     }
 
     object RegexAsString : KSerializer<Regex> {
@@ -214,7 +200,7 @@ class KazzUtilsV2 {
         override fun serialize(encoder: Encoder, value: UUID) = encoder.encodeString(value.toString())
     }
 
-    fun String.toDashedUUID(): String {
+    private fun String.toDashedUUID(): String {
         if (this.length != 32) return this
         return buildString {
             append(this@toDashedUUID)
