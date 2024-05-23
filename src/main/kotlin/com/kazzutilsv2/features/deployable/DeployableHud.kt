@@ -25,14 +25,14 @@ object DeployableHud {
         val config = KazzUtilsV2.config.misc.deployables
         override fun render() {
             if(toggled){
-                val activeOrb = DeployableManager.instance.getActivePowerOrb()?.deployable ?: return
+                val activeOrb = DeployableManager.instance.getActiveDeployable()?.deployable ?: return
                 val rs : ResourceLocation = activeOrb.resourceLocation
                 mc.textureManager.bindTexture(rs)
                 GlStateManager.color(1.0f, 1.0f, 1.0f, 1.0f)
                 Gui.drawModalRectWithCustomSizedTexture(x.toInt(), y.toInt(), 0f, 0f, width, height+5, width.toFloat(), height.toFloat())
 
                 val renderList = mutableListOf<String>()
-                if(config.deployableName) mc.fontRendererObj.drawStringWithShadow(activeOrb.color.toString()+activeOrb.name + ": " + DeployableManager.instance.getActivePowerOrb()?.seconds,x+width,y, Color.CYAN.rgb)
+                if(config.deployableName) mc.fontRendererObj.drawStringWithShadow(activeOrb.display + ": " + DeployableManager.instance.getActiveDeployable()?.seconds + " s",x+width,y, Color.CYAN.rgb)
 
 
                 if(config.deployableInfo) {
@@ -40,8 +40,8 @@ object DeployableHud {
                     if (activeOrb.vitality != 0) renderList.add("Vitality: ${activeOrb.vitality}")
                     if (activeOrb.trueDefense != 0) renderList.add("True Defense: ${activeOrb.trueDefense}")
                     if (activeOrb.ferocity != 0) renderList.add("Ferocity: ${activeOrb.ferocity}")
-                    if (activeOrb.attackSpeed != 0.0) renderList.add("Attack Speed: ${activeOrb.attackSpeed}")
-                    if (activeOrb.manaRegen != 0.0) renderList.add("Mana Regen: ${activeOrb.manaRegen * 100} &")
+                    if (activeOrb.attackSpeed != 0.0) renderList.add("Attack Speed: ${activeOrb.attackSpeed * 100} %")
+                    if (activeOrb.manaRegen != 0.0) renderList.add("Mana Regen: ${activeOrb.manaRegen * 100} %")
                     if (activeOrb.strength != 0) renderList.add("Strength: ${activeOrb.strength}")
                     if (activeOrb.mending != 0.0) renderList.add("Mending: ${activeOrb.mending}")
 
@@ -53,16 +53,23 @@ object DeployableHud {
         }
 
         override fun demoRender() {
-            if(toggled) mc.fontRendererObj.drawStringWithShadow("Deployable",x,y, Color.CYAN.rgb)
+            if(toggled){
+                mc.fontRendererObj.drawStringWithShadow("Deployable",x,y, Color.CYAN.rgb)
+                val activeOrb = DeployableManager.instance.getActiveDeployable()?.deployable ?: return
+                val rs : ResourceLocation = activeOrb.resourceLocation
+                mc.textureManager.bindTexture(rs)
+                GlStateManager.color(1.0f, 1.0f, 1.0f, 1.0f)
+                Gui.drawModalRectWithCustomSizedTexture(x.toInt(), y.toInt(), 0f, 0f, width, height+5, width.toFloat(), height.toFloat())
+            }
         }
 
         val textHeight = ScreenRenderer.fontRenderer.FONT_HEIGHT
         override val toggled: Boolean
             get() = config.deployable
         override val height: Int
-            get() = DeployableManager.instance.getActivePowerOrb()?.deployable?.let { getImageSize(it.resourceLocation)?.first } ?: 50
+            get() = DeployableManager.instance.getActiveDeployable()?.deployable?.let { getImageSize(it.resourceLocation)?.first } ?: 50
         override val width: Int
-            get() = DeployableManager.instance.getActivePowerOrb()?.deployable?.let { getImageSize(it.resourceLocation)?.second } ?: 50
+            get() = DeployableManager.instance.getActiveDeployable()?.deployable?.let { getImageSize(it.resourceLocation)?.second } ?: 50
 
         init {
             KazzUtilsV2.guiManager.registerElement(this)

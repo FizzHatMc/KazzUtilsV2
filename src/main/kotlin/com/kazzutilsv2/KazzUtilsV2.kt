@@ -121,7 +121,7 @@ class KazzUtilsV2 {
 
     @SubscribeEvent
     fun onEntityEvent(event: LivingEvent.LivingUpdateEvent) {
-        if(event.entity is EntityArmorStand && event.entity.hasCustomName()) DeployableManager.instance.detectPowerOrb(event.entity)
+        if(event.entity is EntityArmorStand) DeployableManager.instance.detectDeployables(event.entity as EntityArmorStand)
     }
 
 
