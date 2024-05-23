@@ -28,6 +28,8 @@ import com.kazzutilsv2.features.hud.uioverlay.*
 import com.kazzutilsv2.features.keyshortcut.KeyShortcuts
 import com.kazzutilsv2.features.mining.CommissionTracker
 import com.kazzutilsv2.features.mining.StarCultNotif
+import com.kazzutilsv2.features.misc.MiscFeatures
+import com.kazzutilsv2.features.misc.SkullHider
 import com.kazzutilsv2.features.misc.items.GyroRange
 import com.kazzutilsv2.features.test.render.TestClass
 import com.kazzutilsv2.utils.CatacombsUtils
@@ -108,6 +110,8 @@ class KazzUtilsV2 {
         reg(ChatCommands())
         reg(MythoTracker())
         reg(DeployableManager())
+        reg(MiscFeatures())
+        reg(SkullHider())
 
 
 

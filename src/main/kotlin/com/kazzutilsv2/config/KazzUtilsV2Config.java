@@ -3,6 +3,7 @@ package com.kazzutilsv2.config;
 
 import com.google.gson.annotations.Expose;
 import com.kazzutilsv2.KazzUtilsV2;
+import com.kazzutilsv2.config.categories.combat.Combat;
 import com.kazzutilsv2.config.categories.dungeon.Dungeon;
 import com.kazzutilsv2.config.categories.farming.Farming;
 import com.kazzutilsv2.config.categories.mining.Mining;
@@ -23,6 +24,10 @@ public class KazzUtilsV2Config extends Config {
     public void saveNow() {
         KazzUtilsV2.configManager.save();
     }
+
+    @Expose
+    @Category(name = "Combat", desc = "General Combat Features")
+    public Combat combat = new Combat();
 
     @Expose
     @Category(name = "Dungeon", desc = "Dungeon shit")

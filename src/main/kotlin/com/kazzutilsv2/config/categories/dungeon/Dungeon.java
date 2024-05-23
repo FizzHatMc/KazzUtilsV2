@@ -5,9 +5,16 @@ import com.kazzutilsv2.config.categories.dungeon.feature.DungeonClass;
 import com.kazzutilsv2.config.categories.dungeon.feature.ItemConf;
 import com.kazzutilsv2.config.categories.dungeon.feature.Waypoints;
 import io.github.notenoughupdates.moulconfig.annotations.Category;
+import io.github.notenoughupdates.moulconfig.annotations.ConfigEditorBoolean;
+import io.github.notenoughupdates.moulconfig.annotations.ConfigOption;
 
 
 public class Dungeon {
+
+    @Expose
+    @ConfigOption(name = "Hide Soulweaver Gloves", desc = "")
+    @ConfigEditorBoolean
+    public boolean hideSoulweaverGloves = false;
 
     @Expose
     @Category(name = "Items", desc = "Settings for different Items")

@@ -4,6 +4,7 @@ import net.minecraft.client.Minecraft
 import net.minecraft.inventory.ContainerChest
 import net.minecraft.item.ItemStack
 import net.minecraft.nbt.NBTTagCompound
+import net.minecraftforge.common.util.Constants
 import java.awt.Color
 
 object ItemUtils {
@@ -21,6 +22,19 @@ object ItemUtils {
         get() {
             return this.getSubCompound("ExtraAttributes", false)
         }
+
+    fun ItemStack.getSkullTexture(): String? {
+        if (!this.hasTagCompound()) {
+            return null
+        }
+
+        val nbt = this.tagCompound
+        if (nbt?.hasKey("SkullOwner", 10) == true) {
+            return nbt.getCompoundTag("SkullOwner").getCompoundTag("Properties")
+                .getTagList("textures", Constants.NBT.TAG_COMPOUND).getCompoundTagAt(0).getString("Value")
+        }
+        return null
+    }
 
     /**
      * Returns displayName without control codes.
