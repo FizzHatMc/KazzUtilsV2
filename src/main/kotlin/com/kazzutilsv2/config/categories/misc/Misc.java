@@ -4,11 +4,16 @@ import com.google.gson.annotations.Expose;
 import com.kazzutilsv2.config.categories.event.mythologicalEvent;
 import com.kazzutilsv2.config.categories.misc.feature.*;
 import io.github.notenoughupdates.moulconfig.annotations.Accordion;
+import io.github.notenoughupdates.moulconfig.annotations.ConfigEditorBoolean;
 import io.github.notenoughupdates.moulconfig.annotations.ConfigOption;
 
 public class Misc {
 
 
+    @Expose
+    @ConfigOption(name = "Deployables", desc = "")
+    @Accordion
+    public DeploayAble deployables = new DeploayAble();
 
     @Expose
     @ConfigOption(name = "Items", desc = "")

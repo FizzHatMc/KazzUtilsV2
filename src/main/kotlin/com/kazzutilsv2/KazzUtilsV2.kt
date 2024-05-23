@@ -6,9 +6,10 @@ import com.kazzutilsv2.config.KazzUtilsV2Config
 import com.kazzutilsv2.core.GuiManager
 import com.kazzutilsv2.core.PersistentSave
 import com.kazzutilsv2.data.enumClass.DunClass
-import com.kazzutilsv2.features.mining.CommissionTracker
-import com.kazzutilsv2.features.mining.StarCultNotif
+
 import com.kazzutilsv2.features.chatCommands.ChatCommands
+import com.kazzutilsv2.features.deployable.DeployableHud
+import com.kazzutilsv2.features.deployable.DeployableManager
 import com.kazzutilsv2.features.dungeon.F7.CrystalWaypoints
 import com.kazzutilsv2.features.dungeon.F7.TerminalWaypoints
 import com.kazzutilsv2.features.dungeon.HighlightClass
@@ -25,6 +26,8 @@ import com.kazzutilsv2.features.hud.PetOverlay
 import com.kazzutilsv2.features.hud.SoulflowNotif
 import com.kazzutilsv2.features.hud.uioverlay.*
 import com.kazzutilsv2.features.keyshortcut.KeyShortcuts
+import com.kazzutilsv2.features.mining.CommissionTracker
+import com.kazzutilsv2.features.mining.StarCultNotif
 import com.kazzutilsv2.features.misc.items.GyroRange
 import com.kazzutilsv2.features.test.render.TestClass
 import com.kazzutilsv2.utils.CatacombsUtils
@@ -43,7 +46,9 @@ import kotlinx.serialization.json.Json
 import kotlinx.serialization.modules.SerializersModule
 import net.minecraft.client.Minecraft
 import net.minecraft.client.gui.GuiScreen
+import net.minecraft.entity.item.EntityArmorStand
 import net.minecraftforge.common.MinecraftForge
+import net.minecraftforge.event.entity.living.LivingEvent
 import net.minecraftforge.fml.common.Loader
 import net.minecraftforge.fml.common.Mod
 import net.minecraftforge.fml.common.event.FMLInitializationEvent
@@ -80,7 +85,7 @@ class KazzUtilsV2 {
             CommissionTracker,
             GardenLevelHud,
             ContestHud,
-
+            DeployableHud
 
         ).forEach(MinecraftForge.EVENT_BUS::register)
     }
@@ -102,6 +107,7 @@ class KazzUtilsV2 {
         reg(TestClass())
         reg(ChatCommands())
         reg(MythoTracker())
+        reg(DeployableManager())
 
 
 
@@ -111,6 +117,11 @@ class KazzUtilsV2 {
     @Mod.EventHandler
     fun postInit(event: FMLPostInitializationEvent){
         PersistentSave.loadData()
+    }
+
+    @SubscribeEvent
+    fun onEntityEvent(event: LivingEvent.LivingUpdateEvent) {
+        if(event.entity is EntityArmorStand && event.entity.hasCustomName()) DeployableManager.instance.detectPowerOrb(event.entity)
     }
 
 
