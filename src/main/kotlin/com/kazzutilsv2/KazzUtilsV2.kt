@@ -24,9 +24,7 @@ import com.kazzutilsv2.features.farming.gardenlevel.GardenLevelHud
 import com.kazzutilsv2.features.hud.ArrowsNotif
 import com.kazzutilsv2.features.hud.PetOverlay
 import com.kazzutilsv2.features.hud.SoulflowNotif
-import com.kazzutilsv2.features.hud.uioverlay.DefenseOverlay
-import com.kazzutilsv2.features.hud.uioverlay.EffectiveHPOverlay
-import com.kazzutilsv2.features.hud.uioverlay.SkillOverlay
+import com.kazzutilsv2.features.hud.uioverlay.*
 import com.kazzutilsv2.features.keyshortcut.KeyShortcuts
 import com.kazzutilsv2.features.misc.items.GyroRange
 import com.kazzutilsv2.features.test.render.TestClass
@@ -53,6 +51,7 @@ import net.minecraftforge.common.MinecraftForge
 import net.minecraftforge.fml.common.Loader
 import net.minecraftforge.fml.common.Mod
 import net.minecraftforge.fml.common.event.FMLInitializationEvent
+import net.minecraftforge.fml.common.event.FMLPostInitializationEvent
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent
 import net.minecraftforge.fml.common.eventhandler.EventPriority
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
@@ -79,7 +78,8 @@ class KazzUtilsV2 {
             ScreenRenderer,
             EffectiveHPOverlay,
             SkillOverlay,
-
+            HPOverlay,
+            ManaOverlay,
 
 
         ).forEach(MinecraftForge.EVENT_BUS::register)
@@ -108,6 +108,11 @@ class KazzUtilsV2 {
 
     }
 
+    @Mod.EventHandler
+    fun postInit(event: FMLPostInitializationEvent){
+        PersistentSave.loadData()
+    }
+
 
     var ticks = 0L
 
@@ -125,7 +130,7 @@ class KazzUtilsV2 {
         if(ticks % 20 == 0L) {
             if(config.mining.starCult) StarCultNotif.checkCult()
             Utils.checkSkyblock()
-            PersistentSave.loadData()
+
 
 
 

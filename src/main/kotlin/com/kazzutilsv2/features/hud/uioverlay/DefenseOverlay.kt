@@ -17,7 +17,7 @@ object DefenseOverlay {
         DefenseOverlayElement()
     }
 
-    class DefenseOverlayElement : GuiElement("Defense Overlay Display", x = 10, y = 10) {
+    class DefenseOverlayElement : GuiElement("Defense Overlay Display", 1f, 10,10) {
         val config = KazzUtilsV2.config.misc.hud
         var message : String? = ""
 

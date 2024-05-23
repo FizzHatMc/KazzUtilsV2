@@ -13,24 +13,22 @@ object SkillOverlay {
         SkillOverlayElement()
     }
 
-    class SkillOverlayElement : GuiElement("Skill Overlay Display", x = 10, y = 10) {
+    class SkillOverlayElement : GuiElement("Skill Overlay Display", 1f, 10,10) {
         val config = KazzUtilsV2.config.misc.hud
         var message : String? = ""
 
         override fun render() {
             if(ChatUtils.skill == null)return
-            for(s in ChatUtils.skill!!){
-                message += s
-            }
 
+            message = ChatUtils.skill
 
             if (toggled) {
-                mc.fontRendererObj.drawStringWithShadow(message, x, y, Color.GRAY.darker().rgb)
+                mc.fontRendererObj.drawStringWithShadow(message, x, y, Color.CYAN.darker().rgb)
             }
         }
 
         override fun demoRender() {
-            mc.fontRendererObj.drawStringWithShadow("Skill", x, y, Color.GRAY.darker().rgb)
+            mc.fontRendererObj.drawStringWithShadow("Skill", x, y, Color.CYAN.darker().rgb)
         }
 
         override val height: Int

@@ -14,7 +14,7 @@ object EffectiveHPOverlay {
         EffectiveHPOverlayElement()
     }
 
-    class EffectiveHPOverlayElement : GuiElement("Effective HP Overlay Display", x = 10, y = 10) {
+    class EffectiveHPOverlayElement : GuiElement("Effective HP Overlay Display", 1f, 10,10) {
         val config = KazzUtilsV2.config.misc.hud
         var message : String = ""
         var defense : Int = 0
