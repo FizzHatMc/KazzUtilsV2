@@ -17,6 +17,11 @@ public class Dungeon {
     public boolean hideSoulweaverGloves = false;
 
     @Expose
+    @ConfigOption(name = "Livid Finder", desc = "")
+    @ConfigEditorBoolean
+    public boolean lividFinder = false;
+
+    @Expose
     @Category(name = "Items", desc = "Settings for different Items")
     public ItemConf items = new ItemConf();
 

@@ -1,0 +1,113 @@
+package com.kazzutilsv2.features.dungeon.F5
+
+import com.kazzutilsv2.KazzUtilsV2
+import com.kazzutilsv2.KazzUtilsV2.Companion.mc
+import com.kazzutilsv2.data.enumClass.ChatColor
+import com.kazzutilsv2.data.enumClass.ChatColor.Companion.toChatColor
+import com.kazzutilsv2.event.CheckRenderEntityEvent
+import com.kazzutilsv2.mixin.RenderLivingEntityHelper
+import com.kazzutilsv2.utils.ChatUtils
+import com.kazzutilsv2.utils.RenderUtils
+import com.kazzutilsv2.utils.TabUtils
+import com.kazzutilsv2.utils.withAlpha
+import net.minecraft.block.BlockStainedGlass
+import net.minecraft.client.entity.EntityOtherPlayerMP
+import net.minecraft.client.entity.EntityPlayerSP
+import net.minecraft.entity.Entity
+import net.minecraft.entity.item.EntityArmorStand
+import net.minecraft.potion.Potion
+import net.minecraft.util.AxisAlignedBB
+import net.minecraft.util.BlockPos
+import net.minecraftforge.client.event.RenderWorldLastEvent
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
+import net.minecraftforge.fml.common.gameevent.TickEvent
+import java.awt.Color
+
+object LividFinder {
+    private val blockLoc = BlockPos(6,109,43)
+    var lividEntity: EntityOtherPlayerMP? = null
+    private var lividArmorStand: EntityArmorStand? = null
+    private var gotBlinded = false
+    private var color : ChatColor? = null
+
+    private fun isCurrentlyBlind() = if (mc.thePlayer.isPotionActive(Potion.blindness)) {
+        mc.thePlayer.getActivePotionEffect(Potion.blindness).duration > 10
+    } else false
+
+    @SubscribeEvent
+    fun onTick(event: TickEvent.ClientTickEvent){
+        if(mc.theWorld == null)return
+        if((TabUtils.area != "Catacombs") || !KazzUtilsV2.config.dungeon.lividFinder ) return
+        if(TabUtils.area != "Catacombs") gotBlinded = false
+
+
+        val isCurrentlyBlind = isCurrentlyBlind()
+        if (!gotBlinded) {
+            gotBlinded = isCurrentlyBlind
+            return
+        } else if (isCurrentlyBlind) return
+
+
+        val blockColor = mc.theWorld.getBlockState(blockLoc).getValue(BlockStainedGlass.COLOR)
+        color = blockColor.toChatColor()
+
+        val color = color
+        val chat = color?.toChatColor()
+
+        lividArmorStand = getEntities<EntityArmorStand>()
+            .firstOrNull { it.name.startsWith("${chat}﴾ ${chat}§lLivid") }
+        val lividArmorStand = lividArmorStand ?: return
+
+
+        val aabb = with(lividArmorStand) {
+            AxisAlignedBB(
+                posX - 0.5,
+                posY - 2,
+                posZ - 0.5,
+                posX + 0.5,
+                posY,
+                posZ + 0.5
+            )
+        }
+
+        val newLivid = mc.theWorld.getEntitiesWithinAABB(EntityOtherPlayerMP::class.java, aabb)
+            .takeIf { it.size == 1 }?.firstOrNull() ?: return
+        if (!newLivid.name.contains("Livid")) return
+
+        lividEntity = newLivid
+        /*
+        if (color != null) {
+            color.toColor()?.let {
+                RenderLivingEntityHelper.setEntityColorWithNoHurtTime(
+                    newLivid,
+                    it.withAlpha(30)
+                ) { shouldHighlight() }
+            }
+        }
+
+         */
+
+    }
+
+
+    @SubscribeEvent
+    fun onRender(event: RenderWorldLastEvent){
+        if(mc.theWorld == null)return
+        if(getLividAlive() == null)return
+        if(!KazzUtilsV2.config.dungeon.lividFinder) return
+        RenderUtils.drawOutlinedBoundingBox(getLividAlive()?.entityBoundingBox, Color.RED, 4f,event.partialTicks) ?: return
+    }
+
+    private fun shouldHighlight() = getLividAlive() != null
+
+    private fun getLividAlive() = lividEntity?.let {
+        if (!it.isDead && it.health > 0.5) it else null
+    }
+
+
+    private inline fun <reified R : Entity> getEntities(): Sequence<R> = getAllEntities().filterIsInstance<R>()
+
+    private fun getAllEntities(): Sequence<Entity> = mc?.theWorld?.loadedEntityList?.let {
+        if (mc.isCallingFromMinecraftThread) it else it.toMutableList()
+    }?.asSequence()?.filterNotNull() ?: emptySequence()
+}

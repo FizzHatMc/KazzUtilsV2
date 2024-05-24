@@ -2,7 +2,12 @@ package com.kazzutilsv2.features.misc
 
 import com.kazzutilsv2.KazzUtilsV2
 import com.kazzutilsv2.event.CheckRenderEntityEvent
+import com.kazzutilsv2.utils.ChatUtils
 import com.kazzutilsv2.utils.ItemUtils.getSkullTexture
+import com.kazzutilsv2.utils.ItemUtils.mc
+import com.kazzutilsv2.utils.TabUtils
+import net.minecraft.item.ItemStack
+import net.minecraftforge.client.event.RenderLivingEvent
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
 
 class SkullHider {
@@ -18,12 +23,22 @@ class SkullHider {
 
 
     @SubscribeEvent
-    fun onRender(event: CheckRenderEntityEvent<*>){
-        val entity = event.entity
-        val head = entity.inventory[4]
-        val skullTexture = head?.getSkullTexture()
-        if(KazzUtilsV2.config.dungeon.hideSoulweaverGloves){
-            if(skullTexture == soulWeaverHider) event.isCanceled = true
+    fun onRender(event: RenderLivingEvent.Post<*>){
+        if(mc.theWorld == null) return
+        if(TabUtils.area == "") return
+        val entity = event.entity ?: return
+        var head: ItemStack?
+        if(entity.inventory.size>4){
+            head = entity.inventory[4]
+            val skullTexture = head.getSkullTexture()
+            if(KazzUtilsV2.config.dungeon.hideSoulweaverGloves){
+                if (skullTexture != null) {
+                    ChatUtils.messageToChat(skullTexture)
+                }
+                if(skullTexture == soulWeaverHider) event.isCanceled = true
+            }
         }
+
+
     }
 }

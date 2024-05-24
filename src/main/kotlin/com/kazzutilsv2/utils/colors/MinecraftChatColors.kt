@@ -53,5 +53,7 @@ class MinecraftChatColors private constructor(rgb: Int) : CustomColor.SetBase(rg
             "RED", "LIGHT_PURPLE", "YELLOW", "WHITE"
         )
         val set = ColorSet(colors, names)
+
+
     }
 }

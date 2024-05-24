@@ -1,5 +1,6 @@
 package com.kazzutilsv2.data.enumClass
 
+import net.minecraft.item.EnumDyeColor
 import java.awt.Color
 
 enum class ChatColor(val char: Char, val color: Color? = null, val isFormat: Boolean = false) {
@@ -27,10 +28,15 @@ enum class ChatColor(val char: Char, val color: Color? = null, val isFormat: Boo
     RESET('r');
 
     override fun toString(): String = "$COLOR_CHAR$char"
+    fun toChatColor(): String = "$COLOR_CHAR$char"
 
     fun isColor(): Boolean = color != null
 
     operator fun plus(text: String): String = toString() + text
+
+    fun toColor(): Color? = color
+
+
 
     companion object {
         const val COLOR_CHAR: Char = '\u00a7'
@@ -53,5 +59,26 @@ enum class ChatColor(val char: Char, val color: Color? = null, val isFormat: Boo
 
         fun stripColorCodes(text: String?) =
             text?.let { COLOR_CODE_PATTERN.replace(it, "") }
+
+
+
+        fun EnumDyeColor.toChatColor() = when (this) {
+            EnumDyeColor.WHITE -> WHITE
+            EnumDyeColor.MAGENTA -> AQUA
+            EnumDyeColor.PINK -> LIGHT_PURPLE
+            EnumDyeColor.RED -> RED
+            EnumDyeColor.SILVER -> GRAY
+            EnumDyeColor.GRAY -> GRAY
+            EnumDyeColor.GREEN -> DARK_GREEN
+            EnumDyeColor.LIME -> GREEN
+            EnumDyeColor.BLUE -> BLUE
+            EnumDyeColor.PURPLE -> DARK_PURPLE
+            EnumDyeColor.YELLOW -> YELLOW
+            EnumDyeColor.ORANGE -> GOLD
+            EnumDyeColor.LIGHT_BLUE -> BLUE
+            EnumDyeColor.CYAN -> DARK_AQUA
+            EnumDyeColor.BROWN -> GOLD
+            EnumDyeColor.BLACK -> BLACK
+        }
     }
 }

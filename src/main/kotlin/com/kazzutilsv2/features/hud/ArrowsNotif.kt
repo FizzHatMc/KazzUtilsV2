@@ -3,6 +3,7 @@ package com.kazzutilsv2.features.hud
 import com.kazzutilsv2.KazzUtilsV2
 import com.kazzutilsv2.KazzUtilsV2.Companion.mc
 import com.kazzutilsv2.core.structure.GuiElement
+import com.kazzutilsv2.utils.ChatUtils
 import com.kazzutilsv2.utils.ColorUtils.toChromaColorInt
 import com.kazzutilsv2.utils.ContainerUtils
 import com.kazzutilsv2.utils.RenderUtils
@@ -23,12 +24,13 @@ object ArrowsNotif {
     class ArrowsNotifElement : GuiElement("Arrow Notif Display", 1f, 10,10) {
         val config = KazzUtilsV2.config.misc.arrowSoulflowNotif.arrow!!
         var message : String? = ""
+        var amount = 0
 
         override fun render() {
             val quiver: ItemStack? = ContainerUtils.checkInventoryForName("Quiver", mc.thePlayer.inventory)
             val quiverLore: List<String> = ContainerUtils.getLore(quiver)
             var arrowType = ""
-            var amount = 0
+
 
             for (tag in quiverLore) {
                 if (tag.contains("Active Arrow:")) {
@@ -37,7 +39,8 @@ object ArrowsNotif {
                 }
             }
             //max 2880
-            if(amount<=config.minArrow && config.ArrowNotif) RenderUtils.drawTitle("Arrows",""+amount,EnumChatFormatting.RED)
+
+            if((amount<=config.minArrow) && config.ArrowNotif) RenderUtils.drawTitle("Arrows",""+amount,EnumChatFormatting.RED)
 
             message = arrowType + " / " + amount + "x"
             if(arrowType == "") return

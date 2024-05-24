@@ -18,8 +18,9 @@ object DefenseOverlay {
         var message : String? = ""
 
         override fun render() {
-            if(ChatUtils.defense != "" && ChatUtils.defense != null) message = ChatUtils.defense
             if (toggled) {
+            if(ChatUtils.defense != "" && ChatUtils.defense != null) message = ChatUtils.defense
+
                 mc.fontRendererObj.drawStringWithShadow(message, x, y, Color.GREEN.darker().rgb)
             }
         }

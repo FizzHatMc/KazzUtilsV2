@@ -16,23 +16,34 @@ object ManaOverlay {
 
     class ManaOverlayElement : GuiElement("Mana Overlay Display", 1f, 10,10) {
         val config = KazzUtilsV2.config.misc.hud
-        var message : String = ""
+        var message : String? = ""
         var healthMax : Int = 0
+        var healthTest : String = ""
+        var healthMaxTest : String = ""
         var healthRN : Int = 0
         var color = EnumChatFormatting.BLUE.toString()
 
         override fun render() {
+            if (toggled) {
             //if(!Utils.inSkyblock) return
             if(ChatUtils.mana != "" && ChatUtils.mana != null) {
                 message = ChatUtils.mana.toString()
-                healthMax =
-                    message.substring(message.indexOf(",")).replace(",", "").replace(" ", "").replace(")", "").toInt()
-                healthRN =
-                    message.substring(0, message.indexOf(",")).replace(",", "").replace(" ", "").replace("(", "")
-                        .toInt()
+
+                message = message?.replace(",","")
+                healthMaxTest = message?.substring(message!!.indexOf(" ")) ?: return
+                healthMaxTest = healthMaxTest.replace(",", "")
+                healthMaxTest = healthMaxTest.replace(" ", "")
+                healthMaxTest = healthMaxTest.replace(")", "")
+                healthMax = healthMaxTest.toInt()
+
+                healthTest = message?.substring(0, message!!.indexOf(" ")) ?: return
+                healthTest = healthTest.replace(",", "")
+                healthTest = healthTest.replace(" ", "")
+                healthTest = healthTest.replace("(", "")
+                healthRN = healthTest.toInt()
             }
             if(healthRN != 0 && healthMax != 0) message = "$color$healthRN/$healthMax"
-            if (toggled) {
+
                 mc.fontRendererObj.drawStringWithShadow(message, x, y, Color.BLUE.rgb)
             }
 

@@ -144,7 +144,7 @@ object TabUtils { //TODO: REWORK CLASS = CRASHES ALOT
                     soulflow = trim.substring(trim.indexOf('S') + "Soulflow: ".length).replace(",", "").toInt()
                 }
                 trim.contains("Dungeon: Catacombs") -> {
-                    // area = "Catacombs"
+                    area = "Catacombs"
                 }
                 trim.contains("Commissions:") -> {
                     val index = scoreboardList.indexOf(line)

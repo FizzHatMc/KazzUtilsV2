@@ -10,6 +10,7 @@ import com.kazzutilsv2.data.enumClass.DunClass
 import com.kazzutilsv2.features.chatCommands.ChatCommands
 import com.kazzutilsv2.features.deployable.DeployableHud
 import com.kazzutilsv2.features.deployable.DeployableManager
+import com.kazzutilsv2.features.dungeon.F5.LividFinder
 import com.kazzutilsv2.features.dungeon.F7.CrystalWaypoints
 import com.kazzutilsv2.features.dungeon.F7.TerminalWaypoints
 import com.kazzutilsv2.features.dungeon.HighlightClass
@@ -87,7 +88,8 @@ class KazzUtilsV2 {
             CommissionTracker,
             GardenLevelHud,
             ContestHud,
-            DeployableHud
+            DeployableHud,
+            LividFinder
 
         ).forEach(MinecraftForge.EVENT_BUS::register)
     }
