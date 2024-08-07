@@ -4,9 +4,8 @@ import com.kazzutilsv2.KazzUtilsV2
 import com.kazzutilsv2.KazzUtilsV2.Companion.mc
 import com.kazzutilsv2.data.enumClass.ChatColor
 import com.kazzutilsv2.data.enumClass.ChatColor.Companion.toChatColor
-import com.kazzutilsv2.event.CheckRenderEntityEvent
 import com.kazzutilsv2.mixin.RenderLivingEntityHelper
-import com.kazzutilsv2.utils.ChatUtils
+import com.kazzutilsv2.utils.ItemUtils
 import com.kazzutilsv2.utils.RenderUtils
 import com.kazzutilsv2.utils.TabUtils
 import com.kazzutilsv2.utils.withAlpha
@@ -18,6 +17,7 @@ import net.minecraft.entity.item.EntityArmorStand
 import net.minecraft.potion.Potion
 import net.minecraft.util.AxisAlignedBB
 import net.minecraft.util.BlockPos
+import net.minecraftforge.client.event.RenderLivingEvent
 import net.minecraftforge.client.event.RenderWorldLastEvent
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
 import net.minecraftforge.fml.common.gameevent.TickEvent
@@ -75,17 +75,12 @@ object LividFinder {
         if (!newLivid.name.contains("Livid")) return
 
         lividEntity = newLivid
-        /*
-        if (color != null) {
-            color.toColor()?.let {
-                RenderLivingEntityHelper.setEntityColorWithNoHurtTime(
-                    newLivid,
-                    it.withAlpha(30)
-                ) { shouldHighlight() }
-            }
-        }
+        RenderLivingEntityHelper.setEntityColorWithNoHurtTime(
+            newLivid,
+            color!!.toColor()!!.withAlpha(30)
+        ) { shouldHighlight() }
 
-         */
+
 
     }
 
@@ -96,6 +91,26 @@ object LividFinder {
         if(getLividAlive() == null)return
         if(!KazzUtilsV2.config.dungeon.lividFinder) return
         RenderUtils.drawOutlinedBoundingBox(getLividAlive()?.entityBoundingBox, Color.RED, 4f,event.partialTicks) ?: return
+    }
+
+
+    @SubscribeEvent
+    fun onRender(event: RenderLivingEvent.Post<*>){
+        if(ItemUtils.mc.theWorld == null) return
+        if(TabUtils.area != "Catacombs") return
+        if(!KazzUtilsV2.config.dungeon.lividHider) return
+
+        val entity = event.entity
+        if (entity is EntityPlayerSP) return
+        val livid = getLividAlive() ?: return
+
+        if (entity != livid && entity != lividArmorStand) {
+            if (entity.name.contains("Livid")) {
+                event.isCanceled = true
+            }
+        }
+
+
     }
 
     private fun shouldHighlight() = getLividAlive() != null

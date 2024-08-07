@@ -4,13 +4,8 @@ import com.kazzutilsv2.KazzUtilsV2
 import com.kazzutilsv2.KazzUtilsV2.Companion.mc
 import com.kazzutilsv2.core.structure.GuiElement
 import com.kazzutilsv2.utils.ColorUtils.toChromaColorInt
-import com.kazzutilsv2.utils.RenderUtils
 import com.kazzutilsv2.utils.TabUtils
 import com.kazzutilsv2.utils.graphics.ScreenRenderer
-import net.minecraft.client.gui.ScaledResolution
-import net.minecraft.util.EnumChatFormatting
-import net.minecraftforge.client.event.RenderGameOverlayEvent
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
 
 object PetOverlay {
 

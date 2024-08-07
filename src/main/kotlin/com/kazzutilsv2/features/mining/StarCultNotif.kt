@@ -10,7 +10,7 @@ import net.minecraft.util.EnumChatFormatting
 import net.minecraft.world.World
 
 object StarCultNotif {
-    var tick = false;
+    private var tick = false;
 
     fun checkCult() {
         val scoreboard: List<String> = ScoreboardHandler.getSidebarLines()
@@ -28,10 +28,7 @@ object StarCultNotif {
         val scoreboard: List<String> = ScoreboardHandler.getSidebarLines()
         for (t in scoreboard) {
             val sCleaned: String = ScoreboardHandler.cleanSB(t)
-            if (sCleaned.contains("6th") || sCleaned.contains("13th") || sCleaned.contains("20th") || sCleaned.contains(
-                    "27th"
-                )
-            ) {
+            if (sCleaned.contains("6th") || sCleaned.contains("13th") || sCleaned.contains("20th") || sCleaned.contains("27th")) {
                 tick = true
 
                 ChatUtils.messageToChat(EnumChatFormatting.BLUE.toString() + "---------------------------------")
@@ -45,5 +42,9 @@ object StarCultNotif {
                 tick = false
             }
         }
+    }
+
+    fun test(title: String){
+        mc.ingameGUI.displayTitle(title,"",0,2,0)
     }
 }

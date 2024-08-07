@@ -8,6 +8,7 @@ import com.kazzutilsv2.core.PersistentSave
 import com.kazzutilsv2.data.enumClass.DunClass
 
 import com.kazzutilsv2.features.chatCommands.ChatCommands
+import com.kazzutilsv2.features.misc.items.RagAxe
 import com.kazzutilsv2.features.deployable.DeployableHud
 import com.kazzutilsv2.features.deployable.DeployableManager
 import com.kazzutilsv2.features.dungeon.F5.LividFinder
@@ -32,11 +33,7 @@ import com.kazzutilsv2.features.mining.StarCultNotif
 import com.kazzutilsv2.features.misc.MiscFeatures
 import com.kazzutilsv2.features.misc.SkullHider
 import com.kazzutilsv2.features.misc.items.GyroRange
-import com.kazzutilsv2.features.test.render.TestClass
-import com.kazzutilsv2.utils.CatacombsUtils
-import com.kazzutilsv2.utils.ChatUtils
-import com.kazzutilsv2.utils.TabUtils
-import com.kazzutilsv2.utils.Utils
+import com.kazzutilsv2.utils.*
 import com.kazzutilsv2.utils.colors.CustomColor
 import com.kazzutilsv2.utils.graphics.ScreenRenderer
 import kotlinx.serialization.KSerializer
@@ -89,7 +86,8 @@ class KazzUtilsV2 {
             GardenLevelHud,
             ContestHud,
             DeployableHud,
-            LividFinder
+            LividFinder,
+
 
         ).forEach(MinecraftForge.EVENT_BUS::register)
     }
@@ -108,12 +106,15 @@ class KazzUtilsV2 {
         reg(HighlightClass())
         reg(TankRange())
         reg(GyroRange())
-        reg(TestClass())
         reg(ChatCommands())
         reg(MythoTracker())
         reg(DeployableManager())
         reg(MiscFeatures())
         reg(SkullHider())
+        reg(RagAxe())
+        reg(TitleUtils())
+        reg(SchedRender())
+
 
 
 

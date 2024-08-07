@@ -1,7 +1,6 @@
 package com.kazzutilsv2.features.misc
 
 import com.kazzutilsv2.KazzUtilsV2
-import com.kazzutilsv2.event.CheckRenderEntityEvent
 import com.kazzutilsv2.utils.ChatUtils
 import com.kazzutilsv2.utils.ItemUtils.getSkullTexture
 import com.kazzutilsv2.utils.ItemUtils.mc
@@ -24,7 +23,7 @@ class SkullHider {
 
     @SubscribeEvent
     fun onRender(event: RenderLivingEvent.Post<*>){
-        if(mc.theWorld == null) return
+        if(mc.theWorld == null || true) return
         if(TabUtils.area == "") return
         val entity = event.entity ?: return
         var head: ItemStack?

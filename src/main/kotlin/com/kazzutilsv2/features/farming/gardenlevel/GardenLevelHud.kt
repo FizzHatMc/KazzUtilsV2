@@ -7,9 +7,6 @@ import com.kazzutilsv2.data.farming.GardenXP
 import com.kazzutilsv2.utils.ColorUtils.toChromaColorInt
 import com.kazzutilsv2.utils.TabUtils
 import com.kazzutilsv2.utils.graphics.ScreenRenderer
-import net.minecraft.client.gui.ScaledResolution
-import net.minecraftforge.client.event.RenderGameOverlayEvent
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
 
 object GardenLevelHud {
 

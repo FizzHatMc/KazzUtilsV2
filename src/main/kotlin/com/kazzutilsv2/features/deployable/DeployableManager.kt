@@ -1,19 +1,17 @@
 package com.kazzutilsv2.features.deployable
 
 import com.kazzutilsv2.data.enumClass.Deployable
-import com.kazzutilsv2.utils.Utils
 import com.kazzutilsv2.utils.Utils.removeMinecraftColorCodes
 import net.minecraft.client.Minecraft
 import net.minecraft.client.multiplayer.WorldClient
-import net.minecraft.entity.Entity
 import net.minecraft.entity.item.EntityArmorStand
 import net.minecraft.item.ItemStack
 import net.minecraft.util.AxisAlignedBB
 import net.minecraft.world.WorldSettings
 import net.minecraft.world.WorldType
-import java.util.*
-import net.minecraftforge.common.util.Constants;
+import net.minecraftforge.common.util.Constants
 import java.nio.charset.StandardCharsets
+import java.util.*
 import java.util.regex.Matcher
 import java.util.regex.Pattern
 

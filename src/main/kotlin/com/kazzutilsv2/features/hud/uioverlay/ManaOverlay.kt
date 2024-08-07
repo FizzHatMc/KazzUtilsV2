@@ -16,7 +16,7 @@ object ManaOverlay {
 
     class ManaOverlayElement : GuiElement("Mana Overlay Display", 1f, 10,10) {
         val config = KazzUtilsV2.config.misc.hud
-        var message : String? = ""
+        var message : String = ""
         var healthMax : Int = 0
         var healthTest : String = ""
         var healthMaxTest : String = ""
@@ -24,27 +24,31 @@ object ManaOverlay {
         var color = EnumChatFormatting.BLUE.toString()
 
         override fun render() {
-            if (toggled) {
+            if (false) {
             //if(!Utils.inSkyblock) return
             if(ChatUtils.mana != "" && ChatUtils.mana != null) {
+                if(ChatUtils.mana.toString().isBlank() || ChatUtils.mana.toString().isEmpty())return
                 message = ChatUtils.mana.toString()
 
-                message = message?.replace(",","")
-                healthMaxTest = message?.substring(message!!.indexOf(" ")) ?: return
+                message = message.replace(",","")
+
+
+                healthMaxTest = message.substring(message.indexOf(" "))
                 healthMaxTest = healthMaxTest.replace(",", "")
                 healthMaxTest = healthMaxTest.replace(" ", "")
                 healthMaxTest = healthMaxTest.replace(")", "")
                 healthMax = healthMaxTest.toInt()
 
-                healthTest = message?.substring(0, message!!.indexOf(" ")) ?: return
+                healthTest = message.substring(0, message.indexOf(" "))
                 healthTest = healthTest.replace(",", "")
                 healthTest = healthTest.replace(" ", "")
                 healthTest = healthTest.replace("(", "")
                 healthRN = healthTest.toInt()
-            }
+
             if(healthRN != 0 && healthMax != 0) message = "$color$healthRN/$healthMax"
 
-                mc.fontRendererObj.drawStringWithShadow(message, x, y, Color.BLUE.rgb)
+            if(message.isNotEmpty() && message.isNotBlank() && message != null)    mc.fontRendererObj.drawStringWithShadow(message, x, y, Color.BLUE.rgb)
+            }
             }
 
         }
@@ -59,7 +63,7 @@ object ManaOverlay {
             get() = ScreenRenderer.fontRenderer.getStringWidth("Mana") + 50
 
         override val toggled: Boolean
-            get() = config.hpOverlay
+            get() = config.manaOverlay
 
         init {
             KazzUtilsV2.guiManager.registerElement(this)

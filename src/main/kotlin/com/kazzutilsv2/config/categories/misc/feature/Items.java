@@ -30,4 +30,9 @@ public class Items {
     )
     public float gyroRangeScale = 1F;
 
+    @Expose
+    @ConfigOption(name = "Ragnarok Axe Notification", desc = "")
+    @ConfigEditorBoolean
+    public boolean ragAxe = false;
+
 }

@@ -1,6 +1,7 @@
 package com.kazzutilsv2.config.categories.dungeon;
 
 import com.google.gson.annotations.Expose;
+import com.kazzutilsv2.config.categories.dungeon.feature.DragPrio;
 import com.kazzutilsv2.config.categories.dungeon.feature.DungeonClass;
 import com.kazzutilsv2.config.categories.dungeon.feature.ItemConf;
 import com.kazzutilsv2.config.categories.dungeon.feature.Waypoints;
@@ -22,6 +23,11 @@ public class Dungeon {
     public boolean lividFinder = false;
 
     @Expose
+    @ConfigOption(name = "Hide false Livid", desc = "")
+    @ConfigEditorBoolean
+    public boolean lividHider = false;
+
+    @Expose
     @Category(name = "Items", desc = "Settings for different Items")
     public ItemConf items = new ItemConf();
 
@@ -32,5 +38,9 @@ public class Dungeon {
     @Expose
     @Category(name = "Waypoints", desc = "Settings for Waypoints in Dungeon")
     public Waypoints waypoints = new Waypoints();
+
+    @Expose
+    @Category(name = "Dragon Priority", desc = "Settings for Dragon Prios")
+    public DragPrio dragPrio = new DragPrio();
 
 }

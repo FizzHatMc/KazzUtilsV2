@@ -2,6 +2,7 @@ package com.kazzutilsv2.utils
 
 import com.kazzutilsv2.KazzUtilsV2.Companion.mc
 import net.minecraft.client.gui.FontRenderer
+import net.minecraft.client.gui.ScaledResolution
 import net.minecraft.client.renderer.GlStateManager
 import net.minecraft.client.renderer.RenderGlobal
 import net.minecraft.client.renderer.Tessellator
@@ -9,11 +10,15 @@ import net.minecraft.client.renderer.entity.RenderManager
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats
 import net.minecraft.entity.Entity
 import net.minecraft.util.*
+import net.minecraftforge.client.event.RenderWorldLastEvent
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
 import org.lwjgl.opengl.GL11
 import java.awt.Color
+import java.util.*
 import kotlin.math.cos
 import kotlin.math.sin
 import kotlin.math.sqrt
+
 
 object RenderUtils {
 
@@ -592,6 +597,12 @@ object RenderUtils {
     fun drawTitle(title: String, color: EnumChatFormatting){
         mc.ingameGUI.displayTitle(color.toString() + title, "", 0,3,0)
     }
+
+
+
+
+
+
 
 
 }

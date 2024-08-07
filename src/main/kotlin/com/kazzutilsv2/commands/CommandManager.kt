@@ -1,7 +1,9 @@
 package com.kazzutilsv2.commands
 
 import com.kazzutilsv2.KazzUtilsV2
+import com.kazzutilsv2.KazzUtilsV2.Companion.mc
 import com.kazzutilsv2.commands.SimpleCommand.ProcessCommandRunnable
+import com.kazzutilsv2.features.mining.StarCultNotif
 import com.kazzutilsv2.gui.KeyShortcutsGui
 import com.kazzutilsv2.gui.editing.ElementaEditingGui
 import com.kazzutilsv2.utils.ChatUtils
@@ -12,10 +14,10 @@ import net.minecraftforge.client.ClientCommandHandler
 class CommandManager {
 
     init {
-        //registerCommand("testcommand") {
-
-
-        //}
+        registerCommand("testcommand") {
+            StarCultNotif.checkDate()
+            mc.ingameGUI.displayTitle("Star Cult","",0,2,0)
+        }
         registerCommand("kazzutils") {
             KazzUtilsV2.configManager.openConfigGui()
         }

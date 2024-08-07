@@ -1,13 +1,25 @@
 package com.kazzutilsv2.config.categories.misc;
 
 import com.google.gson.annotations.Expose;
+import com.kazzutilsv2.KazzUtilsV2;
 import com.kazzutilsv2.config.categories.event.mythologicalEvent;
 import com.kazzutilsv2.config.categories.misc.feature.*;
+import com.kazzutilsv2.gui.KeyShortcutsGui;
+import com.kazzutilsv2.gui.editing.ElementaEditingGui;
 import io.github.notenoughupdates.moulconfig.annotations.Accordion;
-import io.github.notenoughupdates.moulconfig.annotations.ConfigEditorBoolean;
+import io.github.notenoughupdates.moulconfig.annotations.ConfigEditorButton;
 import io.github.notenoughupdates.moulconfig.annotations.ConfigOption;
 
 public class Misc {
+
+
+    @ConfigOption(name = "Edit Gui", desc = "Opens GUI Editor")
+    @ConfigEditorButton(buttonText = "OPEN")
+    public Runnable openGui = () -> KazzUtilsV2.displayScreen = new ElementaEditingGui();
+
+    @ConfigOption(name = "Hotkeys", desc = "Opens Hotkeys Editor")
+    @ConfigEditorButton(buttonText = "OPEN")
+    public Runnable hotkeys = () -> KazzUtilsV2.displayScreen = new KeyShortcutsGui();
 
 
     @Expose

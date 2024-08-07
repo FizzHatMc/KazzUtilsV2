@@ -19,7 +19,7 @@ object ChatUtils {
 
     var health: String? = null
     var manaUse: String? = null
-    var mana: String? = null
+    var mana: String = ""
     var skill: String? = null
     var defense: String? = null
 

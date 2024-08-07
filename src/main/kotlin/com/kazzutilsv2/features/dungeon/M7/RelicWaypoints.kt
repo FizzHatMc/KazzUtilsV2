@@ -26,7 +26,7 @@ class RelicWaypoints {
 
         val player: EntityPlayerSP = mc.thePlayer
         val viewer: Entity = mc.renderViewEntity
-        var playersClassAsInt : Int = 6
+        var playersClassAsInt : Int = 1
 
         for(s in DunClass.entries) {
             if(s.classNameAsString == TabUtils.playerClass) playersClassAsInt = s.classNum
